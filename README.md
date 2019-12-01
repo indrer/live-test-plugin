@@ -1,1 +1,2 @@
-#Live test plugin
+# Live test plugin
+Chrome extension
