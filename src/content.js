@@ -1,10 +1,21 @@
-let selector = []
-let elTagName = ''
-let i = 1
+document.getElementById('navbar-brand-centered').addEventListener('mousedown', function (event) {
+  event.stopPropagation()
+  let elTag = event.target.tagName.toLowerCase()
+  let elText = event.target.textContent.trim()
+  let url = window.location.href
 
-window.addEventListener('click', function (event) {
+  console.log('visit "' + url + '"\n' +
+  'in "#navbar-brand-centered" {\n' +
+  '\tclick "' + elTag + '" with text "' + elText + '"\n' +
+  '}')
+})
+
+window.addEventListener('mousedown', function (event) {
   event.stopPropagation()
   let clickedElement = event.target
+  let selector = []
+  let elTagName = ''
+  let i = 1
   while (clickedElement.parentNode !== null) {
     // IDs are used on a single element, so no need to go anywhere further
     if (clickedElement.id) {
@@ -42,8 +53,5 @@ window.addEventListener('click', function (event) {
     }
     clickedElement = clickedElement.parentNode
   }
-  console.log(selector.join(' > '))
-  selector = []
-  elTagName = ''
-  i = 1
+  // console.log(selector.join(' > '))
 })
