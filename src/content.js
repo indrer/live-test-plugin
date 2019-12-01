@@ -1,4 +1,4 @@
-let selector = ''
+let selector = []
 let elTagName = ''
 let i = 1
 
@@ -6,9 +6,8 @@ window.addEventListener('click', function (event) {
   event.stopPropagation()
   let clickedElement = event.target
   while (clickedElement.parentNode !== null) {
-    this.console.log('rann')
     if (clickedElement.id) {
-      selector = '#' + clickedElement.id + ' ' + selector
+      selector.unshift('#' + clickedElement.id)
       break
     } else {
       elTagName = clickedElement.tagName.toLowerCase()
@@ -17,30 +16,31 @@ window.addEventListener('click', function (event) {
         let repeats = false
         // check if any previous elements repeat
         for (let j = 0; j < children.length; j++) {
-          this.console.log(children[j])
-          if (clickedElement !== children[j] && elTagName === children[j].tagName) {
+          if (clickedElement === children[j]) {
+            continue
+          }
+          if (elTagName === children[j].tagName.toLowerCase()) {
             repeats = true
           }
         }
-        this.console.log(repeats)
         if (!repeats) {
-          selector = elTagName + ' ' + selector
+          selector.unshift(elTagName)
         } else {
           while (clickedElement.previousElementSibling) {
             clickedElement = clickedElement.previousElementSibling
             i++
           }
-          selector = elTagName + ':nth-child(' + i + ') ' + selector
+          selector.unshift(elTagName + ':nth-child(' + i + ')')
           i = 1
         }
       } else {
-        selector = elTagName + ' ' + selector
+        selector.unshift(elTagName)
       }
     }
     clickedElement = clickedElement.parentNode
   }
-  console.log(selector)
-  selector = ''
+  console.log(selector.join(' > '))
+  selector = []
   elTagName = ''
   i = 1
 })
