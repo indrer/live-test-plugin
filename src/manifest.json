@@ -10,5 +10,6 @@
         "matches": ["*://*/*"],
         "js":["js/content.js"]
       }
-    ]
+    ],
+    "permissions": ["downloads"]
   }
