@@ -1,3 +1,28 @@
+function saveText(filename, text) {
+  var tempElem = document.createElement('a');
+  tempElem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  tempElem.setAttribute('download', filename);
+  tempElem.click();
+}
+
+document.getElementById('navbar-brand-centered').addEventListener('mousedown', function (event) {
+  event.stopPropagation()
+  let elTag = event.target.tagName.toLowerCase()
+  let elText = event.target.textContent.trim()
+  let url = window.location.href
+
+  console.log('visit "' + url + '"\n' +
+  'in "#navbar-brand-centered" {\n' +
+  '\tclick "' + elTag + '" with text "' + elText + '"\n' +
+  '}')
+  let consolePrint = 'visit "' + url + '"\n' +
+  'in "#navbar-brand-centered" {\n' +
+  '\tclick "' + elTag + '" with text "' + elText + '"\n' +
+  '}'
+  saveText('tester.txt', consolePrint)
+
+})
+
 window.addEventListener('mousedown', function (event) {
   event.stopPropagation()
   let clickedElement = event.target
@@ -56,6 +81,6 @@ window.addEventListener('mousedown', function (event) {
     }
     clickedElement = clickedElement.parentNode
   }
-  console.log(selector.join(' > '))
-  console.log('text content: ' + textContent)
+  //console.log(selector.join(' > '))
+  //console.log('text content: ' + textContent)
 })
