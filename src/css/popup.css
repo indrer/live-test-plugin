@@ -1,0 +1,21 @@
+html, body {
+    width: 300px;
+    height: 150px;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+#initial-page {    
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+#initial-page input {    
+    display: block;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
