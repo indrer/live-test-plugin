@@ -1,3 +1,10 @@
+function saveText(filename, text) {
+  var tempElem = document.createElement('a');
+  tempElem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  tempElem.setAttribute('download', filename);
+  tempElem.click();
+}
+
 window.addEventListener('mousedown', function (event) {
   event.stopPropagation()
   let clickedElement = event.target
@@ -56,6 +63,9 @@ window.addEventListener('mousedown', function (event) {
     }
     clickedElement = clickedElement.parentNode
   }
+  
   console.log(selector.join(' > '))
   console.log('text content: ' + textContent)
+  let consolePrint = selector.join(' > ') + "\n" + 'text content: ' + textContent
+  saveText('tester.txt', consolePrint)
 })
