@@ -19,7 +19,7 @@ document.getElementById('navbar-brand-centered').addEventListener('mousedown', f
   'in "#navbar-brand-centered" {\n' +
   '\tclick "' + elTag + '" with text "' + elText + '"\n' +
   '}'
-  saveText('tester.txt', consolePrint)
+  saveText('tester.wtest', consolePrint)
 
 })
 
