@@ -1,0 +1,26 @@
+{
+  "name": "live-test-plugin",
+  "version": "1.0.0",
+  "description": "Chrome extension",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/u-pi/live-test-plugin.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/u-pi/live-test-plugin/issues"
+  },
+  "homepage": "https://github.com/u-pi/live-test-plugin#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-extension-reloader": "^1.1.4"
+  }
+}

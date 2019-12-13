@@ -1,10 +1,3 @@
-function saveText(filename, text) {
-  var tempElem = document.createElement('a');
-  tempElem.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  tempElem.setAttribute('download', filename);
-  tempElem.click();
-}
-
 document.getElementById('navbar-brand-centered').addEventListener('mousedown', function (event) {
   event.stopPropagation()
   let elTag = event.target.tagName.toLowerCase()
@@ -12,15 +5,14 @@ document.getElementById('navbar-brand-centered').addEventListener('mousedown', f
   let url = window.location.href
 
   console.log('visit "' + url + '"\n' +
-  'in "#navbar-brand-centered" {\n' +
-  '\tclick "' + elTag + '" with text "' + elText + '"\n' +
-  '}')
+    'in "#navbar-brand-centered" {\n' +
+    '\tclick "' + elTag + '" with text "' + elText + '"\n' +
+    '}')
   let consolePrint = 'visit "' + url + '"\n' +
-  'in "#navbar-brand-centered" {\n' +
-  '\tclick "' + elTag + '" with text "' + elText + '"\n' +
-  '}'
+    'in "#navbar-brand-centered" {\n' +
+    '\tclick "' + elTag + '" with text "' + elText + '"\n' +
+    '}'
   saveText('tester.wtest', consolePrint)
-
 })
 
 window.addEventListener('mousedown', function (event) {
