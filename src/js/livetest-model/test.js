@@ -13,8 +13,14 @@ export default class Test {
     this.instructions.addNode(action)
   }
 
-  addAssertion (type, element) {
-    let assertion = new Assertion(type, element)
+  addAssertion (type, element, text) {
+    let assertion = new Assertion(type, element, text)
     this.instructions.addNode(assertion)
+  }
+
+  toString () {
+    let finalString = ''
+    console.log('I WORKED!')
+    return finalString
   }
 }

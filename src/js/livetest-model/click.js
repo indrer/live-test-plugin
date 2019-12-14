@@ -1,3 +1,3 @@
 export default class Click {
-  constructor (element, text) {}
+  constructor (sel, text) {}
 }
