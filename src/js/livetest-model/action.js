@@ -20,4 +20,8 @@ export default class Action {
   getAction () {
     return this.action
   }
+
+  toString () {
+    return this.action.toString()
+  }
 }

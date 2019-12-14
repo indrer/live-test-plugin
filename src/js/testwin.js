@@ -24,7 +24,7 @@ function clickElementEvent () {
 }
 
 function assertElement () {
-  let assertEl = document.getElementById('assert-add')
+  let assertEl = document.getElementById('assert-el-sel')
   assertEl.addEventListener('click', function (event) {
     // Let main.js know that the user will be adding
     // assertion
@@ -37,19 +37,25 @@ function assertElement () {
 function finishButton () {
   let finishButton = document.getElementById('finish-test-button')
   finishButton.addEventListener('click', function (event) {
+    event.preventDefault()
     // Let main.js know that the test is finished
     // and it can start generating the script
     sendMessage('testfin')
-    window.close()
   })
-}
+} 
 
 function sendMessage (subject, assertType) {
-  chrome.windows.getAll({ populate: true }, (windows) => {
-    windows.forEach((window) => {
-      window.tabs.forEach((tab) => {
-        chrome.tabs.sendMessage(tab.id,
-          { from: 'testwin', subject: subject, assertType: assertType })
+  chrome.windows.getAll({ populate: true }, (wins) => {
+    wins.forEach((win) => {
+      win.tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(
+          tab.id,
+          { from: 'testwin', subject: subject, assertType: assertType },
+          () => {
+            if (subject === 'testfin') {
+              window.close()
+            }
+          })
       })
     })
   })

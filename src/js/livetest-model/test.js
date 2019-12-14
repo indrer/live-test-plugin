@@ -8,19 +8,18 @@ export default class Test {
     this.instructions = new LinkedList()
   }
 
-  addAction (type, element, text) {
-    let action = new Action(type)
+  addAction (type, sel, text) {
+    let action = new Action(type, sel, text)
     this.instructions.addNode(action)
   }
 
-  addAssertion (type, element, text) {
-    let assertion = new Assertion(type, element, text)
+  addAssertion (type, sel, text) {
+    let assertion = new Assertion(type, sel, text)
     this.instructions.addNode(assertion)
   }
 
   toString () {
-    let finalString = ''
-    console.log('I WORKED!')
-    return finalString
+    let generateUrl = `visit "${this.url}" \n`
+    return generateUrl + this.instructions.toString()
   }
 }
