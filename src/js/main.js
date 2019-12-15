@@ -45,7 +45,7 @@ function sendMessage (subject) {
       win.tabs.forEach((tab) => {
         chrome.tabs.sendMessage(
           tab.id,
-          { from: new Test(window.location.href), subject: subject })
+          { from: 'main', subject: subject })
       })
     })
   })

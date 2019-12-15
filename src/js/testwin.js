@@ -1,15 +1,17 @@
+import Test from './livetest-model/test'
 // TODO
 // Add visit
 // Display added events
 // Allow removing added events
 
+let test = null
 let message = null
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
   console.log('test? ' + window.location.href)
   message = msg
-  if (msg.from === new Test(window.location.href))
+  if (msg.from === 'main')
     console.log('test! ' + window.location.href)
   response()
 })
