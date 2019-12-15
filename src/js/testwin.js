@@ -9,17 +9,28 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function initEventList () {
+  // visitUrl()
   clickElementEvent()
   assertElement()
   finishButton()
 }
 
+/*
+function visitUrl () {
+  document.getElementById('visit-current').innerHTML = window.location.href
+}*/
+
 function clickElementEvent () {
+  document.getElementById('click-el-sel').disabled = false
+  document.getElementById('assert-el-sel').disabled = true
+  document.getElementById('finish-test-button').disabled = true
   let clickEl = document.getElementById('click-el-sel')
   clickEl.addEventListener('click', function (event) {
     // Inform main.js that the user will be selecting and
     // adding new click event
     sendMessage('clickreq')
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = false
   })
 }
 
@@ -31,6 +42,8 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType)
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = false
   })
 }
 
@@ -42,7 +55,7 @@ function finishButton () {
     // and it can start generating the script
     sendMessage('testfin')
   })
-} 
+}
 
 function sendMessage (subject, assertType) {
   chrome.windows.getAll({ populate: true }, (wins) => {

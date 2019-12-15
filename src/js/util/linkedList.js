@@ -32,6 +32,7 @@ export default class LinkedList {
       this.tail = this.tail.getNext()
     }
   }
+
   getHeadNode () {
     return this.head
   }
