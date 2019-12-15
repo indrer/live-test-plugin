@@ -26,6 +26,7 @@ function listenForClicks (event) {
   let elinfo = selectorGenerator(event)
   if (message.subject === 'clickreq') {
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
+    sendMessage('clickedEl')
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
@@ -36,4 +37,16 @@ function listenForClicks (event) {
 function clickEvent (event) {
   event.preventDefault()
   event.target.removeEventListener('click', clickEvent)
+}
+
+function sendMessage (subject) {
+  chrome.windows.getAll({ populate: true }, (wins) => {
+    wins.forEach((win) => {
+      win.tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(
+          tab.id,
+          { from: new Test(window.location.href), subject: subject })
+      })
+    })
+  })
 }

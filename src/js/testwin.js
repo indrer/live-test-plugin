@@ -3,6 +3,17 @@
 // Display added events
 // Allow removing added events
 
+let message = null
+// Message listener
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+  // Message from popup means we start a test
+  console.log('test? ' + window.location.href)
+  message = msg
+  if (msg.from === new Test(window.location.href))
+    console.log('test! ' + window.location.href)
+  response()
+})
+
 document.addEventListener('DOMContentLoaded', () => {
   // On DOM load, add event listeners
   initEventList()
@@ -29,8 +40,11 @@ function clickElementEvent () {
     // Inform main.js that the user will be selecting and
     // adding new click event
     sendMessage('clickreq')
-    document.getElementById('click-el-sel').disabled = true
-    document.getElementById('assert-el-sel').disabled = false
+    if (msg.from === 'clickedEl') {
+      console.log('HMM')
+      document.getElementById('click-el-sel').disabled = true
+      document.getElementById('assert-el-sel').disabled = false
+    }
   })
 }
 
