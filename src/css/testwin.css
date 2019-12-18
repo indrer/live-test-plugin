@@ -1,0 +1,23 @@
+html, body {
+    font-family: sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+#click-add {
+    margin: 0 auto;
+    padding: 2px;
+}
+
+#assert-add {
+    margin: 0 auto;
+    padding: 2px;
+}
+
+#click-el-sel, #assert-el-sel {
+    display: inline-block;
+    padding: 2px;
+    border: 1px dashed black;
+    cursor: pointer;
+}
+
