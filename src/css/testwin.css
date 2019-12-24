@@ -14,7 +14,7 @@ html, body {
     padding: 2px;
 }
 
-#click-el-sel, #assert-el-sel {
+#click-el-sel, #assert-el-sel, #visit-el-sel {
     display: inline-block;
     padding: 2px;
     border: 1px dashed black;

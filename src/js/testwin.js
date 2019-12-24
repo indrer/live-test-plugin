@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  visitPage()
   finishButton()
 }
 
@@ -31,6 +32,15 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType)
+  })
+}
+
+function visitPage() {
+  let visitInputEl = document.getElementById('visit-el-sel')
+  // For now, it waits for user to click enter 
+  // might change it in the future depending on the DSL
+  visitInputEl.addEventListener('click', function (event) {
+    sendMessage('visitreq')
   })
 }
 

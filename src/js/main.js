@@ -5,6 +5,7 @@ import { saveText } from './util/fileDownloader'
 
 let test = null
 let message = null
+let error = ''
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
@@ -29,6 +30,16 @@ function listenForClicks (event) {
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+  } else if (message.subject === 'visitreq') {
+    if (!event.target.href) { // has no link, send message back to test window to alert user
+      // TODO enable actions in test window again, do not add
+      // this instruction to test window!
+      alert('The element does not contain any links!')
+    } else {
+      let href = event.target.href
+      // TODO possibly add textcont and unique selector separately to keep it consistent
+      test.addVisit(elInfo, href)
+    }
   }
   document.removeEventListener('mousedown', listenForClicks)
 }
