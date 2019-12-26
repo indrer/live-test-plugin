@@ -25,7 +25,6 @@ export let selectorGenerator = function (event) {
       }
     }
   }
-  console.log(textContent)
   return {
     uniqsel: selector.join(' '),
     textcont: textContent
