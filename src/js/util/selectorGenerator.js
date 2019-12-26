@@ -16,7 +16,7 @@ export let selectorGenerator = function (event) {
         break
       } else {
         if (selector.length === 0) {
-          textContent = el.textContent.trim()
+          textContent = el.childNodes[0].nodeValue === null ? '' : el.childNodes[0].nodeValue.trim()
           selector.unshift(el.tagName.toLowerCase())
         } else {
           selector.unshift(el.tagName.toLowerCase())
@@ -25,7 +25,7 @@ export let selectorGenerator = function (event) {
       }
     }
   }
-
+  console.log(textContent)
   return {
     uniqsel: selector.join(' '),
     textcont: textContent

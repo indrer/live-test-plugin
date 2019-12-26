@@ -44,6 +44,7 @@ function clickEvent (event) {
 }
 
 function elMarkEvent(event) {
+  event.stopPropagation()
   event.target.style.outline = '2px solid red'
   if (event.target.tagName.toLowerCase() === 'img') {
     event.target.parentNode.appendChild(_createSelectorElement(event))
