@@ -12,6 +12,8 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   if ((msg.from === 'popup') && (msg.subject === 'startRec')) {
     test = new Test(window.location.href)
   } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
+    document.addEventListener('mouseover', elMarkEvent)
+    document.addEventListener('mouseout', elExitEvent)
     document.addEventListener('mousedown', listenForClicks)
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
     saveText('test.wtest', test.toString())
@@ -30,10 +32,21 @@ function listenForClicks (event) {
     let assertType = message.assertType
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
   }
+  elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
+  document.removeEventListener('mouseover', elMarkEvent)
+  document.removeEventListener('mouseout', elExitEvent)
 }
 
 function clickEvent (event) {
   event.preventDefault()
   event.target.removeEventListener('click', clickEvent)
+}
+
+function elMarkEvent(event) {
+  event.target.style.outline = '2px solid red'
+}
+
+function elExitEvent(event) {
+  event.target.style.outline = ''
 }
