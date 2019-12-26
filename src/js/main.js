@@ -38,7 +38,7 @@ function listenForClicks (event) {
     } else {
       let href = event.target.href
       // TODO possibly add textcont and unique selector separately to keep it consistent
-      test.addVisit(elInfo, href)
+      test.addVisit(elinfo, href)
     }
   }
   document.removeEventListener('mousedown', listenForClicks)

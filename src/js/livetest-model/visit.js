@@ -5,6 +5,7 @@ export default class Visit {
   }
 
   toString () {
-    //TODO after grammar is written for visit action
+    let resultString = `expect to visit "${this.link}"`
+    return resultString
   }
 }
