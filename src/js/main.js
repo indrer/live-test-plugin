@@ -45,14 +45,24 @@ function clickEvent (event) {
 
 function elMarkEvent(event) {
   event.target.style.outline = '2px solid red'
-  event.target.appendChild(_createSelectorElement(event))
+  if (event.target.tagName.toLowerCase() === 'img') {
+    event.target.parentNode.appendChild(_createSelectorElement(event))
+  } else {
+    event.target.appendChild(_createSelectorElement(event))
+  }
 }
 
 function elExitEvent(event) {
   event.target.style.outline = ''
   // TODO think of a better class name?
-  let selChild = event.target.querySelectorAll('.selector-text-wtest')[0]
-  event.target.removeChild(selChild)
+  let selChild = null
+  if (event.target.tagName.toLowerCase() === 'img') {
+    selChild = event.target.parentNode.querySelectorAll('.selector-text-wtest')[0]
+    event.target.parentNode.removeChild(selChild)
+  } else {
+    selChild = event.target.querySelectorAll('.selector-text-wtest')[0]
+    event.target.removeChild(selChild)
+  }
 }
 
 function _createSelectorElement(el) {
@@ -64,7 +74,8 @@ function _createSelectorElement(el) {
 
   let selector = selectorGenerator(el).uniqsel
   let p = document.createElement('p')
-  p.style = `position: absolute; 
+  p.style = `position: absolute;
+  float: left;
   margin-top: -${elHeight + 5}px;
   background: red; 
   font-size: ${(fontSize * 0.8) > 14 ? 14 : (Math.floor(fontSize * 0.8))}px; 
