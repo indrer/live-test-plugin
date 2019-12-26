@@ -45,8 +45,34 @@ function clickEvent (event) {
 
 function elMarkEvent(event) {
   event.target.style.outline = '2px solid red'
+  event.target.appendChild(_createSelectorElement(event))
 }
 
 function elExitEvent(event) {
   event.target.style.outline = ''
+  // TODO think of a better class name?
+  let selChild = event.target.querySelectorAll('.selector-text-wtest')[0]
+  event.target.removeChild(selChild)
+}
+
+function _createSelectorElement(el) {
+  // Target element values
+  let elHeight = el.target.offsetHeight
+  let elWidth = el.target.offsetWidth
+  let fs = window.getComputedStyle(el.target, null).getPropertyValue('font-size');
+  let fontSize = parseFloat(fs)
+
+  let selector = selectorGenerator(el).uniqsel
+  let p = document.createElement('p')
+  p.style = `position: absolute; 
+  margin-top: -${elHeight + 5}px;
+  background: red; 
+  font-size: ${(fontSize * 0.8) > 14 ? 14 : (Math.floor(fontSize * 0.8))}px; 
+  font-weight: normal; 
+  color: white;
+  padding: 0px;
+  z-index: 9999;`
+  p.classList.add('selector-text-wtest')
+  p.textContent = selector
+  return p
 }
