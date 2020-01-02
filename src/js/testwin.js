@@ -5,11 +5,25 @@
 
 let message = null
 // Message listener
+document.getElementById('click-el-sel').disabled = false
+document.getElementById('assert-el-sel').disabled = true
+document.getElementById('finish-test-button').disabled = true
+
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   message = msg
-  if (msg.from === 'main') {
-    document.addEventListener('mousedown', listenForClicks)
-    console.log('msg received from main')
+  if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
+    //  document.addEventListener('mousedown', listenForClicks)
+    console.log('msg received from main - firstsel')
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = false
+    document.getElementById('finish-test-button').disabled = true
+  } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
+    console.log('msg received from main - secondsel')
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = false
   }
   response()
 })
@@ -26,15 +40,15 @@ function initEventList () {
 }
 
 function clickElementEvent () {
-  /*  document.getElementById('click-el-sel').disabled = false
-    document.getElementById('assert-el-sel').disabled = true
-    document.getElementById('finish-test-button').disabled = true
-  */
   let clickEl = document.getElementById('click-el-sel')
   clickEl.addEventListener('click', function (event) {
     // Inform main.js that the user will be selecting and
     // adding new click event
     sendMessage('clickreq')
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
   })
 }
 
@@ -76,20 +90,4 @@ function sendMessage (subject, assertType) {
       })
     })
   })
-}
-
-function listenForClicks (event) {
-  event.target.addEventListener('click', clickEvent)
-  if (message.subject === 'firstsel') {
-    console.log('cliiiiiick')
-
-    document.getElementById('click-el-sel').disabled = true
-
-  }
-  document.removeEventListener('mousedown', listenForClicks)
-}
-
-function clickEvent (event) {
-  event.preventDefault()
-  event.target.removeEventListener('click', clickEvent)
 }
