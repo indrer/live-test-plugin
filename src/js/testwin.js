@@ -1,18 +1,16 @@
-import Test from './livetest-model/test'
 // TODO
 // Add visit
 // Display added events
 // Allow removing added events
 
-let test = null
 let message = null
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
-  // Message from popup means we start a test
-  console.log('test? ' + window.location.href)
   message = msg
-  if (msg.from === 'main')
-    console.log('test! ' + window.location.href)
+  if (msg.from === 'main') {
+    document.addEventListener('mousedown', listenForClicks)
+    console.log('msg received from main')
+  }
   response()
 })
 
@@ -22,31 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function initEventList () {
-  // visitUrl()
   clickElementEvent()
   assertElement()
   finishButton()
 }
 
-/*
-function visitUrl () {
-  document.getElementById('visit-current').innerHTML = window.location.href
-}*/
-
 function clickElementEvent () {
-  document.getElementById('click-el-sel').disabled = false
-  document.getElementById('assert-el-sel').disabled = true
-  document.getElementById('finish-test-button').disabled = true
+  /*  document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
+  */
   let clickEl = document.getElementById('click-el-sel')
   clickEl.addEventListener('click', function (event) {
     // Inform main.js that the user will be selecting and
     // adding new click event
     sendMessage('clickreq')
-    if (msg.from === 'clickedEl') {
-      console.log('HMM')
-      document.getElementById('click-el-sel').disabled = true
-      document.getElementById('assert-el-sel').disabled = false
-    }
   })
 }
 
@@ -58,8 +46,6 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType)
-    document.getElementById('assert-el-sel').disabled = true
-    document.getElementById('finish-test-button').disabled = false
   })
 }
 
@@ -73,7 +59,9 @@ function finishButton () {
   })
 }
 
+
 function sendMessage (subject, assertType) {
+  console.log('testwin clicking')
   chrome.windows.getAll({ populate: true }, (wins) => {
     wins.forEach((win) => {
       win.tabs.forEach((tab) => {
@@ -88,4 +76,20 @@ function sendMessage (subject, assertType) {
       })
     })
   })
+}
+
+function listenForClicks (event) {
+  event.target.addEventListener('click', clickEvent)
+  if (message.subject === 'firstsel') {
+    console.log('cliiiiiick')
+
+    document.getElementById('click-el-sel').disabled = true
+
+  }
+  document.removeEventListener('mousedown', listenForClicks)
+}
+
+function clickEvent (event) {
+  event.preventDefault()
+  event.target.removeEventListener('click', clickEvent)
 }

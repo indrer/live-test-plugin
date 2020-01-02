@@ -25,11 +25,18 @@ function listenForClicks (event) {
   event.target.addEventListener('click', clickEvent)
   let elinfo = selectorGenerator(event)
   if (message.subject === 'clickreq') {
+    console.log('first click')
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
-    sendMessage('clickedEl')
+
+    sendMessage('firstsel')
+
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
+    console.log('assert click')
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+
+    sendMessage('secondsel')
+
   }
   document.removeEventListener('mousedown', listenForClicks)
 }
@@ -39,7 +46,9 @@ function clickEvent (event) {
   event.target.removeEventListener('click', clickEvent)
 }
 
+// send message from this tab
 function sendMessage (subject) {
+  console.log('msg sent from main')
   chrome.windows.getAll({ populate: true }, (wins) => {
     wins.forEach((win) => {
       win.tabs.forEach((tab) => {
@@ -49,4 +58,14 @@ function sendMessage (subject) {
       })
     })
   })
+  /*
+    chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    }, tabs => {
+      chrome.tabs.sendMessage(
+        tabs[0].id,
+        { from: 'main', subject: subject })
+    })
+    */
 }
