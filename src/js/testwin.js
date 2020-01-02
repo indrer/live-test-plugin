@@ -4,15 +4,15 @@
 // Allow removing added events
 
 let message = null
-// Message listener
+
 document.getElementById('click-el-sel').disabled = false
 document.getElementById('assert-el-sel').disabled = true
 document.getElementById('finish-test-button').disabled = true
 
+// Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   message = msg
   if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
-    //  document.addEventListener('mousedown', listenForClicks)
     console.log('msg received from main - firstsel')
 
     document.getElementById('click-el-sel').disabled = true
@@ -60,6 +60,10 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType)
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
   })
 }
 
