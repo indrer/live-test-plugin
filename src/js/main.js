@@ -49,23 +49,24 @@ function clickEvent (event) {
 // send message from this tab
 function sendMessage (subject) {
   console.log('msg sent from main')
-  chrome.windows.getAll({ populate: true }, (wins) => {
-    wins.forEach((win) => {
-      win.tabs.forEach((tab) => {
-        chrome.tabs.sendMessage(
-          tab.id,
-          { from: 'main', subject: subject })
+  chrome.runtime.sendMessage({ from: 'main', subject: subject })
+  /*  chrome.windows.getAll({ populate: true }, (wins) => {
+      wins.forEach((win) => {
+        win.tabs.forEach((tab) => {
+          chrome.tabs.sendMessage(
+            tab.id,
+            { from: 'main', subject: subject })
+        })
       })
     })
-  })
-  /*
-    chrome.tabs.query({
-      active: true,
-      currentWindow: true
-    }, tabs => {
-      chrome.tabs.sendMessage(
-        tabs[0].id,
-        { from: 'main', subject: subject })
-    })
-    */
+    
+      chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      }, tabs => {
+        chrome.tabs.sendMessage(
+          tabs[0].id,
+          { from: 'main', subject: subject })
+      })
+      */
 }
