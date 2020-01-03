@@ -15,17 +15,28 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
     console.log('msg received from main - firstsel')
 
-    document.getElementById('click-el-sel').disabled = true
-    document.getElementById('click-el-sel').innerHTML = 'done or click to change'
+    document.getElementById('click-el-sel').disabled = false
     document.getElementById('assert-el-sel').disabled = false
-    document.getElementById('finish-test-button').disabled = true
+    document.getElementById('finish-test-button').disabled = false
+
+    let node = document.createElement("LI");                                // Create a <li> node
+    let textnode = document.createTextNode("click element added");          // Create a text node
+    node.appendChild(textnode);                                             // Append the text to <li>
+    document.getElementById("selections-list").appendChild(node);                // Append <li> to <ul> with id="click-list"
+
+
   } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
     console.log('msg received from main - secondsel')
 
-    document.getElementById('click-el-sel').disabled = true
-    document.getElementById('assert-el-sel').disabled = true
-    document.getElementById('assert-el-sel').innerHTML = 'done or click to change'
+    document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = false
     document.getElementById('finish-test-button').disabled = false
+
+    let node = document.createElement("LI");                 // Create a <li> node
+    let textnode = document.createTextNode("assert element added");         // Create a text node
+    node.appendChild(textnode);                              // Append the text to <li>
+    document.getElementById("selections-list").appendChild(node);     // Append <li> to <ul> with id="assert-list"
+
   }
   response()
 })
