@@ -15,14 +15,14 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
     console.log('msg received from main - firstsel')
 
-    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('click-el-sel').disabled = false
     document.getElementById('assert-el-sel').disabled = false
-    document.getElementById('finish-test-button').disabled = true
+    document.getElementById('finish-test-button').disabled = false
   } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
     console.log('msg received from main - secondsel')
 
-    document.getElementById('click-el-sel').disabled = true
-    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = false
     document.getElementById('finish-test-button').disabled = false
   }
   response()
