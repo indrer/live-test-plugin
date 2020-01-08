@@ -1,6 +1,7 @@
 import LinkedList from '../util/linkedList'
 import Action from './action'
 import Assertion from './assertion'
+import Execute from './execute'
 
 export default class Test {
   constructor (url) {
@@ -16,6 +17,11 @@ export default class Test {
   addAssertion (type, sel, text) {
     let assertion = new Assertion(type, sel, text)
     this.instructions.addNode(assertion)
+  }
+
+  addExecute (text) {
+    let execute = new Execute(text)
+    this.instructions.addNode(execute)
   }
 
   toString () {

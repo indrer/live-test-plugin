@@ -1,6 +1,7 @@
 import { VISITACT, CLICKACT } from './actionType'
 import Visit from './visit'
 import Click from './click'
+import Execute from './execute'
 
 export default class Action {
   constructor (actionType, sel, text) {
@@ -11,6 +12,9 @@ export default class Action {
         break
       case CLICKACT:
         this.action = new Click(sel, text)
+        break
+      case EXECUTEACT:
+        this.action = new Execute(text)
         break
       default:
         console.log('Something went wrong')
