@@ -30,9 +30,9 @@ function listenForClicks (event) {
     // test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
 
-    tester()
-
+    let msgtext = test.getAction()
     sendMessage('firstsel')
+    sendMessage('firstMsg', msgtext)
 
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
@@ -41,6 +41,8 @@ function listenForClicks (event) {
 
     sendMessage('secondsel')
 
+    let msgtext = test.getAction()
+    sendMessage('secMsg', msgtext)
   }
   document.removeEventListener('mousedown', listenForClicks)
 }
@@ -51,13 +53,15 @@ function clickEvent (event) {
 }
 
 // send message from this tab
-function sendMessage (subject) {
+function sendMessage (subject, msgtext) {
   console.log('msg sent from main')
-  chrome.runtime.sendMessage({ from: 'main', subject: subject })
+  chrome.runtime.sendMessage({ from: 'main', subject: subject, msgtext: msgtext })
 }
 
+/*
 function tester () {
   console.log('@@@@@tester: ' + test.getAction())
   return test.getAction()
 }
 export default { tester }
+*/

@@ -2,11 +2,9 @@
 // Add visit
 // Display added events
 // Allow removing added events
-import myObj from './main'
-
 
 let message = null
-
+let count = 0
 
 document.getElementById('click-el-sel').disabled = false
 document.getElementById('assert-el-sel').disabled = true
@@ -16,33 +14,20 @@ document.getElementById('finish-test-button').disabled = true
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   message = msg
   if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
-    console.log('msg received from main - firstsel')
-
     document.getElementById('click-el-sel').disabled = false
     document.getElementById('assert-el-sel').disabled = false
     document.getElementById('finish-test-button').disabled = false
 
-    //  console.log('linked list: ' + clickText)
-    console.log('linked list2: ' + myObj.tester())
-
-    let node = document.createElement("LI");                                // Create a <li> node
-    let textnode = document.createTextNode("click element added");          // Create a text node
-    node.appendChild(textnode);                                             // Append the text to <li>
-    document.getElementById("selections-list").appendChild(node);                // Append <li> to <ul> with id="click-list"
-
+  } else if ((msg.from === 'main') && (msg.subject === 'firstMsg')) {
+    createListEl()
 
   } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
-    console.log('msg received from main - secondsel')
-
     document.getElementById('click-el-sel').disabled = false
     document.getElementById('assert-el-sel').disabled = false
     document.getElementById('finish-test-button').disabled = false
 
-    let node = document.createElement("LI");                 // Create a <li> node
-    let textnode = document.createTextNode("assert element added");         // Create a text node
-    node.appendChild(textnode);                              // Append the text to <li>
-    document.getElementById("selections-list").appendChild(node);     // Append <li> to <ul> with id="assert-list"
-
+  } else if ((msg.from === 'main') && (msg.subject === 'secMsg')) {
+    createListEl()
   }
   response()
 })
@@ -55,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  clickRemoveEvent()
   finishButton()
 }
 
@@ -96,6 +82,29 @@ function finishButton () {
   })
 }
 
+function createListEl () {
+  let node = document.createElement('LI')
+  node.setAttribute('id', 'li-num' + count++)
+  let remove = document.createElement('BUTTON')
+  remove.innerHTML = 'X'
+  remove.setAttribute('id', 'subx');
+  let msgtext = message.msgtext
+  let textnode = document.createTextNode(msgtext)
+  node.appendChild(textnode)
+  document.getElementById('selections-list').appendChild(node)
+  document.getElementById('selections-list').appendChild(remove)
+}
+
+function clickRemoveEvent () {
+  let removeClick = document.getElementById('subx')
+  if (removeClick != null) {
+    removeClick.addEventListener('click', function (event) {
+      let toRemove = document.getElementById('li-num')
+      toRemove.removeChild()
+      sendMessage('remove-element')
+    })
+  }
+}
 
 function sendMessage (subject, assertType) {
   console.log('testwin clicking')
