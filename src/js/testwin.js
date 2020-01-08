@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  clickSubmitEvent()
   finishButton()
 }
 
@@ -34,6 +35,15 @@ function assertElement () {
   })
 }
 
+function clickSubmitEvent () {
+  let executeSub = document.getElementById('execute-sub')
+  executeSub.addEventListener('click', function (event) {
+    let inputBox = document.getElementById('execute-text')
+    let executeString = inputBox.value
+    sendMessage('executereq', executeString)
+  })
+}
+
 function finishButton () {
   let finishButton = document.getElementById('finish-test-button')
   finishButton.addEventListener('click', function (event) {
@@ -42,15 +52,15 @@ function finishButton () {
     // and it can start generating the script
     sendMessage('testfin')
   })
-} 
+}
 
-function sendMessage (subject, assertType) {
+function sendMessage (subject, assertType, executeString) {
   chrome.windows.getAll({ populate: true }, (wins) => {
     wins.forEach((win) => {
       win.tabs.forEach((tab) => {
         chrome.tabs.sendMessage(
           tab.id,
-          { from: 'testwin', subject: subject, assertType: assertType },
+          { from: 'testwin', subject: subject, assertType: assertType, executeString: executeString },
           () => {
             if (subject === 'testfin') {
               window.close()

@@ -4,7 +4,7 @@ export default class Execute {
   }
 
   toString () {
-    let action = `execute "${this.text}"`
+    let action = `execute {{ "${this.text}" }}`
     if (this.text.length === 0) {
       return action
     }

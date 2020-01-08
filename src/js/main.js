@@ -1,6 +1,6 @@
 import Test from './livetest-model/test'
 import { selectorGenerator } from './util/selectorGenerator'
-import { VISITACT, CLICKACT } from './livetest-model/actionType'
+import { VISITACT, CLICKACT, EXECUTEACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'
 
 let test = null
@@ -13,6 +13,9 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     test = new Test(window.location.href)
   } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
     document.addEventListener('mousedown', listenForClicks)
+  } else if ((msg.from === 'testwin') && (msg.subject === 'executereq')) {
+    let executeString = message.executeString
+    test.addExecute(executeString)
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
     saveText('test.wtest', test.toString())
     test = null
