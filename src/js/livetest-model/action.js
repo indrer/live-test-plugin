@@ -1,4 +1,4 @@
-import { VISITACT, CLICKACT } from './actionType'
+import { VISITACT, CLICKACT, EXECUTEACT } from './actionType'
 import Visit from './visit'
 import Click from './click'
 import Execute from './execute'

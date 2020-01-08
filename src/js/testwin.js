@@ -40,7 +40,7 @@ function clickSubmitEvent () {
   executeSub.addEventListener('click', function (event) {
     let inputBox = document.getElementById('execute-text')
     let executeString = inputBox.value
-    sendMessage('executereq', executeString)
+    sendMessage('executereq', '', executeString)
   })
 }
 

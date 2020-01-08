@@ -11,11 +11,11 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   message = msg
   if ((msg.from === 'popup') && (msg.subject === 'startRec')) {
     test = new Test(window.location.href)
-  } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
-    document.addEventListener('mousedown', listenForClicks)
   } else if ((msg.from === 'testwin') && (msg.subject === 'executereq')) {
     let executeString = message.executeString
-    test.addExecute(executeString)
+    test.addAction(EXECUTEACT, '', executeString)
+  } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
+    document.addEventListener('mousedown', listenForClicks)
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
     saveText('test.wtest', test.toString())
     test = null
