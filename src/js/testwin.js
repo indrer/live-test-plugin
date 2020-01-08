@@ -35,10 +35,8 @@ function assertElement () {
   })
 }
 
-function visitPage() {
+function visitPage () {
   let visitInputEl = document.getElementById('visit-el-sel')
-  // For now, it waits for user to click enter 
-  // might change it in the future depending on the DSL
   visitInputEl.addEventListener('click', function (event) {
     sendMessage('visitreq')
   })

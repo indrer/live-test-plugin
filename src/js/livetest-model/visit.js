@@ -5,7 +5,7 @@ export default class Visit {
   }
 
   toString () {
-    let resultString = `expect to visit "${this.link}"`
+    let resultString = `visit "${this.link}"`
     return resultString
   }
 }
