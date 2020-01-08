@@ -29,6 +29,9 @@ function listenForClicks (event) {
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+  } else if (message.subject == 'havereq') {
+    let haveType = message.assertType
+    test.addAssertion(haveType, elinfo.uniqsel, elinfo.textcont)
   }
   document.removeEventListener('mousedown', listenForClicks)
 }

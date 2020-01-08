@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  assertHave()
   finishButton()
 }
 
@@ -31,6 +32,15 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType)
+  })
+}
+
+function assertHave () {
+  let haveEl = document.getElementById('have-el-sel')
+  haveEl.addEventListener('click', function (event) {
+    let selection = document.getElementById('have-op')
+    let haveType = selection.options[selection.selectedIndex].value
+    sendMessage('havereq', haveType)
   })
 }
 
