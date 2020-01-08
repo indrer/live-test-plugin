@@ -13,6 +13,10 @@ export default class Test {
     this.instructions.addNode(action)
   }
 
+  getAction () {
+    return this.instructions.getCurrentNode()
+  }
+
   addAssertion (type, sel, text) {
     let assertion = new Assertion(type, sel, text)
     this.instructions.addNode(assertion)

@@ -5,6 +5,7 @@ import { saveText } from './util/fileDownloader'
 
 let test = null
 let message = null
+
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
@@ -26,7 +27,10 @@ function listenForClicks (event) {
   let elinfo = selectorGenerator(event)
   if (message.subject === 'clickreq') {
     console.log('first click')
+    // test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
+
+    tester()
 
     sendMessage('firstsel')
 
@@ -51,3 +55,9 @@ function sendMessage (subject) {
   console.log('msg sent from main')
   chrome.runtime.sendMessage({ from: 'main', subject: subject })
 }
+
+function tester () {
+  console.log('@@@@@tester: ' + test.getAction())
+  return test.getAction()
+}
+export default { tester }

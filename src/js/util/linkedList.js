@@ -36,6 +36,24 @@ export default class LinkedList {
     return this.head
   }
 
+  getCurrentNode () {
+    if (this.head == null) {
+      return ''
+    }
+    if (this.tail === this.head) {
+      return this.head.getData().toString()
+    }
+    let resultString = ''
+    let currentNode = this.head
+    while (currentNode.getNext() !== null) {
+      resultString = currentNode.getData().toString() + '\n'
+      currentNode = currentNode.getNext()
+    }
+    resultString = currentNode.getData().toString()
+    return resultString
+  }
+
+
   toString () {
     if (this.head == null) {
       return ''

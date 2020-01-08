@@ -2,9 +2,11 @@
 // Add visit
 // Display added events
 // Allow removing added events
-import Test from './livetest-model/test'
+import myObj from './main'
+
 
 let message = null
+
 
 document.getElementById('click-el-sel').disabled = false
 document.getElementById('assert-el-sel').disabled = true
@@ -19,6 +21,9 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     document.getElementById('click-el-sel').disabled = false
     document.getElementById('assert-el-sel').disabled = false
     document.getElementById('finish-test-button').disabled = false
+
+    //  console.log('linked list: ' + clickText)
+    console.log('linked list2: ' + myObj.tester())
 
     let node = document.createElement("LI");                                // Create a <li> node
     let textnode = document.createTextNode("click element added");          // Create a text node

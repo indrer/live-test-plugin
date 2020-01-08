@@ -22,6 +22,7 @@ export default class Action {
   }
 
   toString () {
+    //  console.log('action class string: ' + this.action.toString())
     return this.action.toString()
   }
 }
