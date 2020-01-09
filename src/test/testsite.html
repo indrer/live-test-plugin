@@ -8,32 +8,47 @@
 
 <body>
   <div class="test-page">
-    <!-- classic test -->
-    <div id="lnu-container" class="lnu-container">
-      <div id="lnu-div" class="lnu-div">Lnu-Div</div>
-      <a id="lnu-a" href="https://lnu.se/">Visit Lnu</a>
+    <!-- a test -->
+    <div class="lnu-container">
+      <div class="lnu-div">Lnu-Div</div>
+      <a href="https://lnu.se/">Visit Lnu1</a>
+      <a href="https://lnu.se/">Visit Lnu2</a>
+      <a href="https://lnu.se/">Visit Lnu3</a>
     </div>
     <!-- div and input have same class -->
-    <div id="selenium-container" class="selenium-container">
-      <div id="selenium-div" class="selenium-div">Same-Class-Test</div>
-      <input id="text-box" class="selenium-div" type="text" name="text-box" value="Enter Text" size="35">
-      <a id="selenium-a" href="https://www.seleniumeasy.com/test/">Visit Selenium</a>
+    <div class="selenium-container">
+      <div class="selenium-el">Same-Class-Test</div>
+      <input class="selenium-el" type="text" name="text-box" value="Enter Text" size="35">
+      <a href="https://www.seleniumeasy.com/test/">Visit Selenium</a>
     </div>
     <!-- buried element -->
-    <div id="lipsum-container" class="lipsum-container">
-      <div id="lipsum-div" class="lipsum-div">Lipsum-Div</div>
-      <div id="lets" class="lets">
-        <div id="bury" class="bury">
-          <input type="button" id="one-btn" class="one-btn" value="btn" />
-          <div id="thisone" class="thisone">
-            <div id="deep" class="deep">
-              <a id="lipsum-a" href="https://www.lipsum.com/">Visit Lipsum</a>
+    <div class="lipsum-container">
+      <div class="lipsum-div">Lipsum-Div</div>
+      <div class="lets">lets
+        <div class="bury">bury
+          <input type="button" class="one-btn" value="btn" />
+          <div class="thisone">thisone
+            <div class="deep">deep
+              <a href="https://www.lipsum.com/">Visit Lipsum</a>
             </div>
           </div>
-          <div id="random-div" class="random-div">Random-Div</div>
+          <div class="random-div">Random-Div</div>
         </div>
       </div>
-      <input type="button" id="two-btn" class="two-btn" value="btn" />
+      <input type="button" class="two-btn" value="btn" />
+    </div>
+    <!-- list elements -->
+    <div id="list-container" class="list-container">
+      <ul>
+        <li>Something1</li>
+        <a href="#">
+          <li>Something2</li>
+        </a>
+        <li>Something3</li>
+        <a href="#">
+          <li>Something4</li>
+        </a>
+      </ul>
     </div>
   </div>
   <script type="text/javascript" src="../js/popup.js"></script>
