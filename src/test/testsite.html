@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../css/test.css">
+</head>
+
+<body>
+  <div class="test-page">
+    <!-- a test -->
+    <div class="lnu-container">
+      <div class="lnu-div">Lnu-Div</div>
+      <a href="https://lnu.se/">Visit Lnu1</a>
+      <a href="https://lnu.se/">Visit Lnu2</a>
+      <a href="https://lnu.se/">Visit Lnu3</a>
+    </div>
+    <!-- div and input have same class -->
+    <div class="selenium-container">
+      <div class="selenium-el">Same-Class-Test</div>
+      <input class="selenium-el" type="text" name="text-box" value="Enter Text" size="35">
+      <a href="https://www.seleniumeasy.com/test/">Visit Selenium</a>
+    </div>
+    <!-- buried element -->
+    <div class="lipsum-container">
+      <div class="lipsum-div">Lipsum-Div</div>
+      <div class="lets">lets
+        <div class="bury">bury
+          <input type="button" class="one-btn" value="btn" />
+          <div class="thisone">thisone
+            <div class="deep">deep
+              <a href="https://www.lipsum.com/">Visit Lipsum</a>
+            </div>
+          </div>
+          <div class="random-div">Random-Div</div>
+        </div>
+      </div>
+      <input type="button" class="two-btn" value="btn" />
+    </div>
+    <!-- list elements -->
+    <div id="list-container" class="list-container">
+      <ul>
+        <li>Something1</li>
+        <a href="#">
+          <li>Something2</li>
+        </a>
+        <li>Something3</li>
+        <a href="#">
+          <li>Something4</li>
+        </a>
+      </ul>
+    </div>
+  </div>
+  <script type="text/javascript" src="../js/popup.js"></script>
+</body>
+
+</html>
