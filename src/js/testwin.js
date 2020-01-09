@@ -1,8 +1,6 @@
 // TODO
-// Add visit
 // Display added events
 // Allow removing added events
-
 let message = null
 
 document.getElementById('click-el-sel').disabled = false
@@ -36,6 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  executionClearField()
+  clickSubmitEvent()
   finishButton()
 }
 
@@ -44,7 +44,7 @@ function clickElementEvent () {
   clickEl.addEventListener('click', function (event) {
     // Inform main.js that the user will be selecting and
     // adding new click event
-    sendMessage('clickreq')
+    sendMessage('clickreq', '', '')
 
     document.getElementById('click-el-sel').disabled = true
     document.getElementById('assert-el-sel').disabled = true
@@ -59,11 +59,28 @@ function assertElement () {
     // assertion
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
-    sendMessage('assertreq', assertType)
+    sendMessage('assertreq', assertType, '')
 
     document.getElementById('click-el-sel').disabled = true
     document.getElementById('assert-el-sel').disabled = true
     document.getElementById('finish-test-button').disabled = true
+  })
+}
+
+function executionClearField () {
+  let execTextField = document.getElementById('execute-text')
+  execTextField.addEventListener('focus', function (event) {
+    execTextField.value = ''
+  })
+}
+
+function clickSubmitEvent () {
+  let executeSub = document.getElementById('execute-sub')
+  executeSub.addEventListener('click', function (event) {
+    let inputBox = document.getElementById('execute-text')
+    let executeString = inputBox.value
+    sendMessage('executereq', '', executeString)
+    inputBox.value = ''
   })
 }
 
@@ -77,15 +94,13 @@ function finishButton () {
   })
 }
 
-
-function sendMessage (subject, assertType) {
-  console.log('testwin clicking')
+function sendMessage (subject, assertType, executeString) {
   chrome.windows.getAll({ populate: true }, (wins) => {
     wins.forEach((win) => {
       win.tabs.forEach((tab) => {
         chrome.tabs.sendMessage(
           tab.id,
-          { from: 'testwin', subject: subject, assertType: assertType },
+          { from: 'testwin', subject: subject, assertType: assertType, executeString: executeString },
           () => {
             if (subject === 'testfin') {
               window.close()
