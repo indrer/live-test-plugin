@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/u-pi/live-test-plugin#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.7.0"
+    "@babel/polyfill": "^7.7.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
@@ -27,6 +28,7 @@
     "@babel/preset-env": "^7.7.7",
     "babel-loader": "^8.0.6",
     "jest": "^24.9.0",
+    "jsdom": "^15.2.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-extension-reloader": "^1.1.4"

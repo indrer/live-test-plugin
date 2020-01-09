@@ -1,6 +1,4 @@
-export let selectorGenerator = function (event) {
-  event.stopPropagation()
-  let el = event.target
+export let selectorGenerator = function (el) {
   let selector = []
   let textContent = ''
   if (el.id) {

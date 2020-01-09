@@ -30,7 +30,8 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 // Listener for clicks
 function listenForClicks (event) {
   event.target.addEventListener('click', clickEvent)
-  let elinfo = selectorGenerator(event)
+  event.stopPropagation()
+  let elinfo = selectorGenerator(event.target)
   if (message.subject === 'clickreq') {
     console.log('first click')
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
@@ -52,7 +53,7 @@ function listenForClicks (event) {
     } else {
       let href = event.target.href
       // TODO possibly add textcont and unique selector separately to keep it consistent
-      test.addVisit(elinfo, href)
+      test.addAction(VISITACT, elinfo, href)
     }
     sendMessage('visitsel')
   }
@@ -95,7 +96,7 @@ function createSelectorElement (el) {
   let fs = window.getComputedStyle(el.target, null).getPropertyValue('font-size')
   let fontSize = parseFloat(fs)
 
-  let selector = selectorGenerator(el).uniqsel
+  let selector = selectorGenerator(el.target).uniqsel
   let p = document.createElement('p')
   p.style = `position: absolute;
   margin-top: -${elHeight + 5}px;
