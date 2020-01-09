@@ -4,7 +4,8 @@
   "description": "Chrome extension",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-loader": "^8.0.6",
+    "jest": "^24.9.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-extension-reloader": "^1.1.4"
