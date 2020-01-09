@@ -1,4 +1,4 @@
-import Test from './livetest-model/test'
+import Test from './livetest-model/wtest'
 import { selectorGenerator } from './util/selectorGenerator'
 import { VISITACT, CLICKACT, EXECUTEACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'

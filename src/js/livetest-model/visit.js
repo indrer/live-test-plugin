@@ -1,4 +1,4 @@
-class Visit {
+export default class Visit {
   constructor (sel, link) {
     this.sel = sel
     this.link = link
@@ -9,5 +9,3 @@ class Visit {
     return resultString
   }
 }
-
-module.exports = { Visit }
