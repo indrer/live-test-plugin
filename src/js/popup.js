@@ -30,6 +30,6 @@ function startRecordingEvent () {
     url: chrome.runtime.getURL('../html/testwin.html'),
     type: 'popup',
     width: 453,
-    height: 200
+    height: 250
   })
 }
