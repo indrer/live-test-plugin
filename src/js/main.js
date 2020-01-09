@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   } else if ((msg.from === 'testwin') && (msg.subject === 'executereq')) {
     let executeString = message.executeString
     test.addAction(EXECUTEACT, '', executeString)
+    sendMessage('executesel')
   } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
     document.addEventListener('mouseover', elMarkEvent)
     document.addEventListener('mouseout', elExitEvent)
@@ -33,14 +34,16 @@ function listenForClicks (event) {
   if (message.subject === 'clickreq') {
     console.log('first click')
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
-    sendMessage('firstsel')
+    sendMessage('clicksel')
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
     console.log('assert click')
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+    sendMessage('assertsel')
   } else if (message.subject == 'havereq') {
     let haveType = message.assertType
     test.addAssertion(haveType, elinfo.uniqsel, elinfo.textcont)
+    sendMessage('havesel')
   } else if (message.subject === 'visitreq') {
     if (!event.target.href) { // has no link, send message back to test window to alert user
       // TODO enable actions in test window again, do not add
@@ -51,7 +54,7 @@ function listenForClicks (event) {
       // TODO possibly add textcont and unique selector separately to keep it consistent
       test.addVisit(elinfo, href)
     }
-    sendMessage('secondsel')
+    sendMessage('visitsel')
   }
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
@@ -64,7 +67,7 @@ function clickEvent (event) {
   event.target.removeEventListener('click', clickEvent)
 }
 
-function elMarkEvent(event) {
+function elMarkEvent (event) {
   event.stopPropagation()
   event.target.style.outline = '2px solid red'
   if (event.target.tagName.toLowerCase() === 'img') {
@@ -74,7 +77,7 @@ function elMarkEvent(event) {
   }
 }
 
-function elExitEvent(event) {
+function elExitEvent (event) {
   event.target.style.outline = ''
   let selChild = null
   if (event.target.tagName.toLowerCase() === 'img') {
@@ -86,7 +89,7 @@ function elExitEvent(event) {
   }
 }
 
-function createSelectorElement(el) {
+function createSelectorElement (el) {
   // Target element values
   let elHeight = el.target.offsetHeight
   let elWidth = el.target.offsetWidth

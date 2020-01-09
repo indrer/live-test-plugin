@@ -8,25 +8,30 @@
 
 <body>
     <div id="test-element">
-        <div id="click-add">click <div id="click-el-sel">click and select an element</div></div>
+        <div id="click-add">click
+            <input type="button" value="click and select an element" id="click-el-sel">
+        </div>
         <div id="assert-add">expect to
             <select id="assert-op">
                 <option value="see">See</option>
                 <option value="not-see">Not see</option>
             </select>
-            <div id="assert-el-sel">click and select an element</div>
+            <input type="button" value="click and select an element" id="assert-el-sel">
         </div>
-        <div id="assert-have">expect to 
+        <div id="assert-have">expect to
             <select id="have-op">
                 <option value="have">Have</option>
                 <option value="not-have">Not have</option>
             </select>
-            <div id="have-el-sel">click and select an element</div>
+            <input type="button" value="click and select an element" id="have-el-sel">
         </div>
-        <div id="execute-add">execute 
-            <input id="execute-text" type="text" name="test" value="Input your code" size="35"> <input id="execute-sub" type="submit" value="Submit" style="">
+        <div id="execute-add">execute
+            <input id="execute-text" type="text" name="test" value="Input your code" size="35"> <input id="execute-sub"
+                type="submit" value="Submit" style="">
         </div>
-        <div id="visit-add">visit <div id="visit-el-sel">click and select an element</div></div>
+        <div id="visit-add">visit
+            <input type="button" value="click and select an element" id="visit-el-sel">
+        </div>
         <input type="button" value="Finish test" id="finish-test-button" />
     </div>
     <script type="text/javascript" src="../js/testwin.js"></script>

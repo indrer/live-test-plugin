@@ -2,26 +2,15 @@
 // Display added events
 // Allow removing added events
 let message = null
-
-document.getElementById('click-el-sel').disabled = false
-document.getElementById('assert-el-sel').disabled = true
-document.getElementById('finish-test-button').disabled = true
+enableAll()
 
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   message = msg
-  if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
-    console.log('msg received from main - firstsel')
-
-    document.getElementById('click-el-sel').disabled = false
-    document.getElementById('assert-el-sel').disabled = false
-    document.getElementById('finish-test-button').disabled = false
-  } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
-    console.log('msg received from main - secondsel')
-
-    document.getElementById('click-el-sel').disabled = false
-    document.getElementById('assert-el-sel').disabled = false
-    document.getElementById('finish-test-button').disabled = false
+  if ((msg.from === 'main') && ((msg.subject === 'clicksel') || (msg.subject === 'assertsel')
+    || (msg.subject === 'havesel') || (msg.subject === 'visitsel') || (msg.subject === 'executesel'))) {
+    console.log('msg received from main')
+    enableAll()
   }
   response()
 })
@@ -50,6 +39,8 @@ function clickElementEvent () {
 
     document.getElementById('click-el-sel').disabled = true
     document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('have-el-sel').disabled = true
+    document.getElementById('visit-el-sel').disabled = true
     document.getElementById('finish-test-button').disabled = true
   })
 }
@@ -63,9 +54,7 @@ function assertElement () {
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType, '')
 
-    document.getElementById('click-el-sel').disabled = true
-    document.getElementById('assert-el-sel').disabled = true
-    document.getElementById('finish-test-button').disabled = true
+    disableAll()
   })
 }
 
@@ -83,6 +72,7 @@ function clickSubmitEvent () {
     let executeString = inputBox.value
     sendMessage('executereq', '', executeString)
     inputBox.value = ''
+    disableAll()
   })
 }
 
@@ -90,6 +80,7 @@ function visitPage () {
   let visitInputEl = document.getElementById('visit-el-sel')
   visitInputEl.addEventListener('click', function (event) {
     sendMessage('visitreq')
+    disableAll()
   })
 }
 
@@ -99,6 +90,7 @@ function assertHave () {
     let selection = document.getElementById('have-op')
     let haveType = selection.options[selection.selectedIndex].value
     sendMessage('havereq', haveType)
+    disableAll()
   })
 }
 
@@ -127,4 +119,23 @@ function sendMessage (subject, assertType, executeString) {
       })
     })
   })
+}
+
+// Helpers for disabling and enabling
+function disableAll () {
+  document.getElementById('click-el-sel').disabled = true
+  document.getElementById('assert-el-sel').disabled = true
+  document.getElementById('have-el-sel').disabled = true
+  document.getElementById('execute-sub').disabled = true
+  document.getElementById('visit-el-sel').disabled = true
+  document.getElementById('finish-test-button').disabled = true
+}
+
+function enableAll () {
+  document.getElementById('click-el-sel').disabled = false
+  document.getElementById('assert-el-sel').disabled = false
+  document.getElementById('have-el-sel').disabled = false
+  document.getElementById('execute-sub').disabled = false
+  document.getElementById('visit-el-sel').disabled = false
+  document.getElementById('finish-test-button').disabled = false
 }
