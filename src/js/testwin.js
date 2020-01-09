@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  visitPage()
   executionClearField()
   clickSubmitEvent()
   finishButton()
@@ -81,6 +82,13 @@ function clickSubmitEvent () {
     let executeString = inputBox.value
     sendMessage('executereq', '', executeString)
     inputBox.value = ''
+  })
+}
+
+function visitPage () {
+  let visitInputEl = document.getElementById('visit-el-sel')
+  visitInputEl.addEventListener('click', function (event) {
+    sendMessage('visitreq')
   })
 }
 

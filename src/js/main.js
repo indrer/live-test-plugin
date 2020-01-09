@@ -5,6 +5,7 @@ import { saveText } from './util/fileDownloader'
 
 let test = null
 let message = null
+let error = ''
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
@@ -32,16 +33,22 @@ function listenForClicks (event) {
   if (message.subject === 'clickreq') {
     console.log('first click')
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
-
     sendMessage('firstsel')
-
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
     console.log('assert click')
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
-
+  } else if (message.subject === 'visitreq') {
+    if (!event.target.href) { // has no link, send message back to test window to alert user
+      // TODO enable actions in test window again, do not add
+      // this instruction to test window!
+      alert('The element does not contain any links!')
+    } else {
+      let href = event.target.href
+      // TODO possibly add textcont and unique selector separately to keep it consistent
+      test.addVisit(elinfo, href)
+    }
     sendMessage('secondsel')
-
   }
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
@@ -58,9 +65,9 @@ function elMarkEvent(event) {
   event.stopPropagation()
   event.target.style.outline = '2px solid red'
   if (event.target.tagName.toLowerCase() === 'img') {
-    event.target.parentNode.appendChild(_createSelectorElement(event))
+    event.target.parentNode.appendChild(createSelectorElement(event))
   } else {
-    event.target.appendChild(_createSelectorElement(event))
+    event.target.appendChild(createSelectorElement(event))
   }
 }
 
@@ -76,7 +83,7 @@ function elExitEvent(event) {
   }
 }
 
-function _createSelectorElement(el) {
+function createSelectorElement(el) {
   // Target element values
   let elHeight = el.target.offsetHeight
   let elWidth = el.target.offsetWidth
