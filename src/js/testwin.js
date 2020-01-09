@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  assertHave()
   visitPage()
   executionClearField()
   clickSubmitEvent()
@@ -89,6 +90,15 @@ function visitPage () {
   let visitInputEl = document.getElementById('visit-el-sel')
   visitInputEl.addEventListener('click', function (event) {
     sendMessage('visitreq')
+  })
+}
+
+function assertHave () {
+  let haveEl = document.getElementById('have-el-sel')
+  haveEl.addEventListener('click', function (event) {
+    let selection = document.getElementById('have-op')
+    let haveType = selection.options[selection.selectedIndex].value
+    sendMessage('havereq', haveType)
   })
 }
 

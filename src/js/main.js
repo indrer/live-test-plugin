@@ -38,6 +38,9 @@ function listenForClicks (event) {
     let assertType = message.assertType
     console.log('assert click')
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+  } else if (message.subject == 'havereq') {
+    let haveType = message.assertType
+    test.addAssertion(haveType, elinfo.uniqsel, elinfo.textcont)
   } else if (message.subject === 'visitreq') {
     if (!event.target.href) { // has no link, send message back to test window to alert user
       // TODO enable actions in test window again, do not add
