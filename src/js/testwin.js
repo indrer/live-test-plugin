@@ -36,12 +36,7 @@ function clickElementEvent () {
     // Inform main.js that the user will be selecting and
     // adding new click event
     sendMessage('clickreq', '', '')
-
-    document.getElementById('click-el-sel').disabled = true
-    document.getElementById('assert-el-sel').disabled = true
-    document.getElementById('have-el-sel').disabled = true
-    document.getElementById('visit-el-sel').disabled = true
-    document.getElementById('finish-test-button').disabled = true
+    disableAll()
   })
 }
 
@@ -53,7 +48,6 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType, '')
-
     disableAll()
   })
 }
