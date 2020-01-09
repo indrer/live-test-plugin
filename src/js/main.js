@@ -92,14 +92,12 @@ function elExitEvent (event) {
 function createSelectorElement (el) {
   // Target element values
   let elHeight = el.target.offsetHeight
-  let elWidth = el.target.offsetWidth
-  let fs = window.getComputedStyle(el.target, null).getPropertyValue('font-size');
+  let fs = window.getComputedStyle(el.target, null).getPropertyValue('font-size')
   let fontSize = parseFloat(fs)
 
   let selector = selectorGenerator(el).uniqsel
   let p = document.createElement('p')
   p.style = `position: absolute;
-  float: left;
   margin-top: -${elHeight + 5}px;
   background: red; 
   font-size: ${(fontSize * 0.8) > 14 ? 14 : (Math.floor(fontSize * 0.8))}px; 
