@@ -11,6 +11,7 @@ function initEventList () {
 }
 
 function startRecordingEvent () {
+  console.log('popup click')
   // Send message to content.js, referencing current tab
   // This asks content.js to set up event listeners for
   // element clicks

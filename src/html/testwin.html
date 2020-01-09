@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../css/testwin.css">
 </head>
+
 <body>
-     <div id="test-element">
+    <div id="test-element">
         <div id="click-add">click <div id="click-el-sel">click and select an element</div></div>
-        <div id="assert-add">expect to 
+        <div id="assert-add">expect to
             <select id="assert-op">
                 <option value="see">See</option>
                 <option value="not-see">Not see</option>
             </select>
-             <div id="assert-el-sel">click and select an element</div>
+            <div id="assert-el-sel">click and select an element</div>
         </div>
         <div id="assert-have">expect to 
             <select id="have-op">
@@ -21,8 +23,13 @@
             </select>
             <div id="have-el-sel">click and select an element</div>
         </div>
+        <div id="execute-add">execute 
+            <input id="execute-text" type="text" name="test" value="Input your code" size="35"> <input id="execute-sub" type="submit" value="Submit" style="">
+        </div>
+        <div id="visit-add">visit <div id="visit-el-sel">click and select an element</div></div>
         <input type="button" value="Finish test" id="finish-test-button" />
     </div>
     <script type="text/javascript" src="../js/testwin.js"></script>
 </body>
+
 </html>
