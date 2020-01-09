@@ -4,12 +4,7 @@ html, body {
     text-align: center;
 }
 
-#click-add {
-    margin: 0 auto;
-    padding: 2px;
-}
-
-#assert-add {
+#click-add, #assert-add, #execute-add {
     margin: 0 auto;
     padding: 2px;
 }

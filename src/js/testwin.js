@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventList () {
   clickElementEvent()
   assertElement()
+  executionClearField()
   clickSubmitEvent()
   finishButton()
 }
@@ -35,12 +36,20 @@ function assertElement () {
   })
 }
 
+function executionClearField () {
+  let execTextField = document.getElementById('execute-text')
+  execTextField.addEventListener('focus', function (event) {
+    execTextField.value = ''
+  })
+}
+
 function clickSubmitEvent () {
   let executeSub = document.getElementById('execute-sub')
   executeSub.addEventListener('click', function (event) {
     let inputBox = document.getElementById('execute-text')
     let executeString = inputBox.value
     sendMessage('executereq', '', executeString)
+    inputBox.value = ''
   })
 }
 
