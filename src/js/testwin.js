@@ -3,6 +3,31 @@
 // Display added events
 // Allow removing added events
 
+let message = null
+
+document.getElementById('click-el-sel').disabled = false
+document.getElementById('assert-el-sel').disabled = true
+document.getElementById('finish-test-button').disabled = true
+
+// Message listener
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+  message = msg
+  if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
+    console.log('msg received from main - firstsel')
+
+    document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = false
+    document.getElementById('finish-test-button').disabled = false
+  } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
+    console.log('msg received from main - secondsel')
+
+    document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = false
+    document.getElementById('finish-test-button').disabled = false
+  }
+  response()
+})
+
 document.addEventListener('DOMContentLoaded', () => {
   // On DOM load, add event listeners
   initEventList()
@@ -20,6 +45,10 @@ function clickElementEvent () {
     // Inform main.js that the user will be selecting and
     // adding new click event
     sendMessage('clickreq')
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
   })
 }
 
@@ -31,6 +60,10 @@ function assertElement () {
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType)
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
   })
 }
 
@@ -42,9 +75,11 @@ function finishButton () {
     // and it can start generating the script
     sendMessage('testfin')
   })
-} 
+}
+
 
 function sendMessage (subject, assertType) {
+  console.log('testwin clicking')
   chrome.windows.getAll({ populate: true }, (wins) => {
     wins.forEach((win) => {
       win.tabs.forEach((tab) => {

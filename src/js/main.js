@@ -27,10 +27,18 @@ function listenForClicks (event) {
   event.target.addEventListener('click', clickEvent)
   let elinfo = selectorGenerator(event)
   if (message.subject === 'clickreq') {
+    console.log('first click')
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
+
+    sendMessage('firstsel')
+
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
+    console.log('assert click')
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+
+    sendMessage('secondsel')
+
   }
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
@@ -55,7 +63,6 @@ function elMarkEvent(event) {
 
 function elExitEvent(event) {
   event.target.style.outline = ''
-  // TODO think of a better class name?
   let selChild = null
   if (event.target.tagName.toLowerCase() === 'img') {
     selChild = event.target.parentNode.querySelectorAll('.selector-text-wtest')[0]
@@ -87,4 +94,10 @@ function _createSelectorElement(el) {
   p.classList.add('selector-text-wtest')
   p.textContent = selector
   return p
+}
+
+// send message from this tab
+function sendMessage (subject) {
+  console.log('msg sent from main')
+  chrome.runtime.sendMessage({ from: 'main', subject: subject })
 }
