@@ -16,7 +16,11 @@ export let selectorGenerator = function (event) {
         break
       } else {
         if (selector.length === 0) {
-          textContent = el.childNodes[0].nodeValue === null ? '' : el.childNodes[0].nodeValue.trim()
+          if (el.tagName === 'img' || el.childNodes.length === 0) {
+            textContent = ''
+          } else {
+            textContent = el.childNodes[0].nodeValue === null ? '' : el.childNodes[0].nodeValue.trim()
+          }
           selector.unshift(el.tagName.toLowerCase())
         } else {
           selector.unshift(el.tagName.toLowerCase())

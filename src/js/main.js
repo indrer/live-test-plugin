@@ -64,7 +64,7 @@ function clickEvent (event) {
   event.target.removeEventListener('click', clickEvent)
 }
 
-function elMarkEvent(event) {
+function elMarkEvent (event) {
   event.stopPropagation()
   event.target.style.outline = '2px solid red'
   if (event.target.tagName.toLowerCase() === 'img') {
@@ -74,7 +74,7 @@ function elMarkEvent(event) {
   }
 }
 
-function elExitEvent(event) {
+function elExitEvent (event) {
   event.target.style.outline = ''
   let selChild = null
   if (event.target.tagName.toLowerCase() === 'img') {
@@ -86,17 +86,15 @@ function elExitEvent(event) {
   }
 }
 
-function createSelectorElement(el) {
+function createSelectorElement (el) {
   // Target element values
   let elHeight = el.target.offsetHeight
-  let elWidth = el.target.offsetWidth
-  let fs = window.getComputedStyle(el.target, null).getPropertyValue('font-size');
+  let fs = window.getComputedStyle(el.target, null).getPropertyValue('font-size')
   let fontSize = parseFloat(fs)
 
   let selector = selectorGenerator(el).uniqsel
   let p = document.createElement('p')
   p.style = `position: absolute;
-  float: left;
   margin-top: -${elHeight + 5}px;
   background: red; 
   font-size: ${(fontSize * 0.8) > 14 ? 14 : (Math.floor(fontSize * 0.8))}px; 
