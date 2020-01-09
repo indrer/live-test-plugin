@@ -1,7 +1,30 @@
 // TODO
-// Add visit
 // Display added events
 // Allow removing added events
+let message = null
+
+document.getElementById('click-el-sel').disabled = false
+document.getElementById('assert-el-sel').disabled = true
+document.getElementById('finish-test-button').disabled = true
+
+// Message listener
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+  message = msg
+  if ((msg.from === 'main') && (msg.subject === 'firstsel')) {
+    console.log('msg received from main - firstsel')
+
+    document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = false
+    document.getElementById('finish-test-button').disabled = false
+  } else if ((msg.from === 'main') && (msg.subject === 'secondsel')) {
+    console.log('msg received from main - secondsel')
+
+    document.getElementById('click-el-sel').disabled = false
+    document.getElementById('assert-el-sel').disabled = false
+    document.getElementById('finish-test-button').disabled = false
+  }
+  response()
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   // On DOM load, add event listeners
@@ -21,7 +44,11 @@ function clickElementEvent () {
   clickEl.addEventListener('click', function (event) {
     // Inform main.js that the user will be selecting and
     // adding new click event
-    sendMessage('clickreq')
+    sendMessage('clickreq', '', '')
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
   })
 }
 
@@ -32,7 +59,11 @@ function assertElement () {
     // assertion
     let selection = document.getElementById('assert-op')
     let assertType = selection.options[selection.selectedIndex].value
-    sendMessage('assertreq', assertType)
+    sendMessage('assertreq', assertType, '')
+
+    document.getElementById('click-el-sel').disabled = true
+    document.getElementById('assert-el-sel').disabled = true
+    document.getElementById('finish-test-button').disabled = true
   })
 }
 
