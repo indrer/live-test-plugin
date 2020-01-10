@@ -25,7 +25,6 @@ function initEventList () {
   assertElement()
   assertHave()
   visitPage()
-  executionClearField()
   clickSubmitEvent()
   finishButton()
 }
@@ -49,13 +48,6 @@ function assertElement () {
     let assertType = selection.options[selection.selectedIndex].value
     sendMessage('assertreq', assertType, '')
     disableAll()
-  })
-}
-
-function executionClearField () {
-  let execTextField = document.getElementById('execute-text')
-  execTextField.addEventListener('focus', function (event) {
-    execTextField.value = ''
   })
 }
 

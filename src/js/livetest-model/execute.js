@@ -6,6 +6,10 @@ export default class Execute {
   }
 
   toString () {
-    return `execute {{ ${this.text} }}`
+    if (this.text.includes('\n')) {
+      return `execute {{\n ${this.text}\n}}`
+    } else {
+      return `execute {{ ${this.text} }}`
+    }
   }
 }

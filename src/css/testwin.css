@@ -16,3 +16,17 @@ html, body {
     cursor: pointer;
 }
 
+#execute-add {
+    position: relative;
+}
+
+#execute-add textarea {
+    box-sizing: border-box;
+}
+
+#execute-add input {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+
