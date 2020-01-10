@@ -1,11 +1,11 @@
-import { selectorGenerator } from '../js/util/selectorGenerator'
+import { selectorGenerator } from '../../js/util/selectorGenerator'
 
 const jsdom = require("jsdom")
 const { JSDOM } = jsdom
 var fs = require('fs')
 
 test('Generating selector for element with parent that has an ID', () => {
-  fs.readFile('./src/test/testsite.html', 'utf8', function (err, data) {
+  fs.readFile('./src/test/mocks/testsite.html', 'utf8', function (err, data) {
     if (err) {
       throw err
     }
@@ -17,7 +17,7 @@ test('Generating selector for element with parent that has an ID', () => {
 })
 
 test('Generating selector to an element with no id, with a lot of parents', () => {
-  fs.readFile('./src/test/testsite.html', 'utf8', function (err, data) {
+  fs.readFile('./src/test/mocks/testsite.html', 'utf8', function (err, data) {
     if (err) {
       throw err
     }
@@ -29,7 +29,7 @@ test('Generating selector to an element with no id, with a lot of parents', () =
 })
 
 test('Generating selector for element with several siblings with same class and type', () => {
-  fs.readFile('./src/test/testsite.html', 'utf8', function (err, data) {
+  fs.readFile('./src/test/mocks/testsite.html', 'utf8', function (err, data) {
     if (err) {
       throw err
     }

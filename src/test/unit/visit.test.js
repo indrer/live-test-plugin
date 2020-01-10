@@ -1,4 +1,4 @@
-import Visit from '../js/livetest-model/visit'
+import Visit from '../../js/livetest-model/visit'
 
 let visittest = new Visit('', 'https://google.com')
 let visittestNoLink = new Visit('', '')

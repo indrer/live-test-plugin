@@ -1,4 +1,4 @@
-import Click from '../js/livetest-model/click'
+import Click from '../../js/livetest-model/click'
 
 let clicktest = new Click('#click-test', 'testing click')
 let clicktestNoText = new Click('#click', '')

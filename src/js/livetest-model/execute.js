@@ -7,7 +7,7 @@ export default class Execute {
 
   toString () {
     if (this.text.includes('\n')) {
-      return `execute {{\n ${this.text}\n}}`
+      return `execute {{\n${this.text}\n}}`
     } else {
       return `execute {{ ${this.text} }}`
     }

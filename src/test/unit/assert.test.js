@@ -1,5 +1,5 @@
-import Assertion from '../js/livetest-model/assertion'
-import { SEE, NOTSEE, HAVE, NOTHAVE } from '../js/livetest-model/assertionType'
+import Assertion from '../../js/livetest-model/assertion'
+import { SEE, NOTSEE, HAVE, NOTHAVE } from '../../js/livetest-model/assertionType'
 
 let seetest = new Assertion(SEE, '#test-see')
 let seetestWithText = new Assertion(SEE, '#test-see', 'visible')
