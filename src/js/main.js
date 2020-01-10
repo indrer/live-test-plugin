@@ -33,12 +33,10 @@ function listenForClicks (event) {
   event.stopPropagation()
   let elinfo = selectorGenerator(event.target)
   if (message.subject === 'clickreq') {
-    console.log('first click')
     test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
     sendMessage('clicksel')
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
-    console.log('assert click')
     test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
     sendMessage('assertsel')
   } else if (message.subject == 'havereq') {
@@ -113,6 +111,5 @@ function createSelectorElement (el) {
 
 // send message from this tab
 function sendMessage (subject) {
-  console.log('msg sent from main')
   chrome.runtime.sendMessage({ from: 'main', subject: subject })
 }

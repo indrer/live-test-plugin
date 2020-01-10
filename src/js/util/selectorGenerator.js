@@ -16,12 +16,16 @@ export let selectorGenerator = function (el) {
         break
       } else {
         if (selector.length === 0) {
-          if (el.tagName === 'img' || el.childNodes.length === 0) {
+          if (el.tagName.toLowerCase() === 'img' || el.childNodes.length === 0) {
             textContent = ''
           } else {
             textContent = el.childNodes[0].nodeValue === null ? '' : escapeString(el.childNodes[0].nodeValue.trim())
           }
-          selector.unshift(el.tagName.toLowerCase())
+          if (el.tagName.toLowerCase() === 'img') {
+            selector.unshift(`img[src='${el.src}']`)
+          } else {
+            selector.unshift(el.tagName.toLowerCase())
+          }
         } else {
           selector.unshift(el.tagName.toLowerCase())
         }
