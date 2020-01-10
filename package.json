@@ -27,8 +27,10 @@
     "@babel/plugin-transform-modules-commonjs": "^7.7.5",
     "@babel/preset-env": "^7.7.7",
     "babel-loader": "^8.0.6",
+    "canvas": "^2.6.1",
     "jest": "^24.9.0",
     "jsdom": "^15.2.1",
+    "safe-string-literal": "^1.0.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-extension-reloader": "^1.1.4"

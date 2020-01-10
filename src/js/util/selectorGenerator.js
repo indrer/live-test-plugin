@@ -1,3 +1,5 @@
+import { escapeString } from './stringEscape'
+
 export let selectorGenerator = function (el) {
   let selector = []
   let textContent = ''
@@ -17,7 +19,7 @@ export let selectorGenerator = function (el) {
           if (el.tagName === 'img' || el.childNodes.length === 0) {
             textContent = ''
           } else {
-            textContent = el.childNodes[0].nodeValue === null ? '' : el.childNodes[0].nodeValue.trim()
+            textContent = el.childNodes[0].nodeValue === null ? '' : escapeString(el.childNodes[0].nodeValue.trim())
           }
           selector.unshift(el.tagName.toLowerCase())
         } else {
