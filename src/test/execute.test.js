@@ -15,3 +15,16 @@ test('Execute (no code) toString() generates correct string', () => {
 test('Execute (new line) toString() generates correct string', () => {
   expect(executeTestNewLine.toString()).toBe('execute {{ console.log("Hi");\nalert("Hello") }}')
 })
+
+// expect to not contain
+test('Execute toString() detects wrong string', () => {
+  expect(executetest.toString()).toEqual(expect.not.stringContaining('execute {{ console.log("wrong") }}'))
+})
+
+test('Execute (no code) detects existing string', () => {
+  expect(executetestNoCode.toString()).toEqual(expect.not.stringContaining('execute {{ console.log("not empty") }}'))
+})
+
+test('Execute (new line) detects empty string', () => {
+  expect(executeTestNewLine.toString()).toEqual(expect.not.stringContaining('execute {{  }}'))
+})

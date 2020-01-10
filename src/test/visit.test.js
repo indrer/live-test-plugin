@@ -10,3 +10,12 @@ test('Visit toString() generates correct string', () => {
 test('Visit (no link) toString() generates correct string', () => {
   expect(visittestNoLink.toString()).toBe('visit ""')
 })
+
+// expect to not contain
+test('Visit toString() etect wrong link', () => {
+  expect(visittest.toString()).toEqual(expect.not.stringContaining('visit "https://lipsum.com"'))
+})
+
+test('Visit (no link) toString() detect link is not empty', () => {
+  expect(visittestNoLink.toString()).toEqual(expect.not.stringContaining('visit "https://google.com"'))
+})
