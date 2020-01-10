@@ -5,7 +5,6 @@ import { saveText } from './util/fileDownloader'
 
 let test = null
 let message = null
-let error = ''
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test

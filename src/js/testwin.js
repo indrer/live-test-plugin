@@ -115,6 +115,9 @@ function disableAll () {
   document.getElementById('execute-sub').disabled = true
   document.getElementById('visit-el-sel').disabled = true
   document.getElementById('finish-test-button').disabled = true
+  document.getElementById('assert-op').disabled = true
+  document.getElementById('have-op').disabled = true
+  document.getElementById('execute-text').disabled = true
 }
 
 function enableAll () {
@@ -124,4 +127,7 @@ function enableAll () {
   document.getElementById('execute-sub').disabled = false
   document.getElementById('visit-el-sel').disabled = false
   document.getElementById('finish-test-button').disabled = false
+  document.getElementById('assert-op').disabled = false
+  document.getElementById('have-op').disabled = false
+  document.getElementById('execute-text').disabled = false
 }
