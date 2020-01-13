@@ -22,7 +22,7 @@ export let selectorGenerator = function (el) {
             textContent = el.childNodes[0].nodeValue === null ? '' : escapeString(el.childNodes[0].nodeValue.trim())
           }
           if (el.tagName.toLowerCase() === 'img') {
-            selector.unshift(`img[src='${el.src}']`)
+            selector.unshift(`img[src='${escapeString(el.src)}']`)
           } else {
             selector.unshift(el.tagName.toLowerCase())
           }

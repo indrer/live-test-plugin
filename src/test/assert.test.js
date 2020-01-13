@@ -1,21 +1,21 @@
 import Assertion from '../js/livetest-model/assertion'
 import { SEE, NOTSEE, HAVE, NOTHAVE } from '../js/livetest-model/assertionType'
 
-let seetest = new Assertion(SEE, '#test-see')
-let seetestWithText = new Assertion(SEE, '#test-see', 'visible')
-let seetestWithoutSel = new Assertion(SEE, '', '')
+let seetest = new Assertion(SEE, { uniqsel: '#test-see', textcont: '' }, '')
+let seetestWithText = new Assertion(SEE, { uniqsel: '#test-see', textcont: 'visible' }, '')
+let seetestWithoutSel = new Assertion(SEE, { uniqsel: '', textcont: '' }, '')
 
-let notseetest = new Assertion(NOTSEE, '#test-notsee')
-let noteseetestWithText = new Assertion(NOTSEE, '#test-notsee', 'visible')
-let noteseetestWithoutSel = new Assertion(NOTSEE, '', '')
+let notseetest = new Assertion(NOTSEE, { uniqsel: '#test-notsee', textcont: '' }, '')
+let noteseetestWithText = new Assertion(NOTSEE, { uniqsel: '#test-notsee', textcont: 'visible' }, '')
+let noteseetestWithoutSel = new Assertion(NOTSEE, { uniqsel: '', textcont: '' }, '')
 
-let havetest = new Assertion(HAVE, '#test-have')
-let havetestWithText = new Assertion(HAVE, '#test-have', 'visible')
-let havetestWithoutSel = new Assertion(HAVE, '', '')
+let havetest = new Assertion(HAVE, { uniqsel: '#test-have', textcont: '' }, '')
+let havetestWithText = new Assertion(HAVE, { uniqsel: '#test-have', textcont: 'visible' }, '')
+let havetestWithoutSel = new Assertion(HAVE, { uniqsel: '', textcont: '' }, '')
 
-let nothavetest = new Assertion(NOTHAVE, '#test-nothave')
-let nothavetestWithText = new Assertion(NOTHAVE, '#test-nothave', 'visible')
-let nothavetestWithoutSel = new Assertion(NOTHAVE, '', '')
+let nothavetest = new Assertion(NOTHAVE, { uniqsel: '#test-nothave', textcont: '' }, '')
+let nothavetestWithText = new Assertion(NOTHAVE, { uniqsel: '#test-nothave', textcont: 'visible' }, '')
+let nothavetestWithoutSel = new Assertion(NOTHAVE, { uniqsel: '', textcont: '' }, '')
 
 // ========= See tests =========
 describe('"See" assertion', () => {

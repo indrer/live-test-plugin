@@ -1,11 +1,11 @@
 import Action from '../js/livetest-model/action'
 import { VISITACT, CLICKACT, EXECUTEACT } from '../js/livetest-model/actionType'
 
-let visitAction = new Action(VISITACT, '', 'https://lnu.se')
-let visitActionNoText = new Action(VISITACT, '', '')
+let visitAction = new Action(VISITACT, null, 'https://lnu.se')
+let visitActionNoText = new Action(VISITACT, null, '')
 
-let clickAction = new Action(CLICKACT, '#click-test-id', 'a div')
-let clickActionNoText = new Action(CLICKACT, '#click-test-id', '')
+let clickAction = new Action(CLICKACT, { uniqsel: '#click-test-id', textcont: 'a div' }, '')
+let clickActionNoText = new Action(CLICKACT, { uniqsel: '#click-test-id', textcont: '' }, '')
 
 let executeAction = new Action(EXECUTEACT, '', 'alert("Hi")')
 let executeActionNoJs = new Action(EXECUTEACT, '', '')

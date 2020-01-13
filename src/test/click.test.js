@@ -1,8 +1,8 @@
 import Click from '../js/livetest-model/click'
 
-let clicktest = new Click('#click-test', 'testing click')
-let clicktestNoText = new Click('#click', '')
-let clicktestNoSel = new Click('', '')
+let clicktest = new Click({ uniqsel: '#click-test', textcont: 'testing click' })
+let clicktestNoText = new Click({ uniqsel: '#click', textcont: '' })
+let clicktestNoSel = new Click({ uniqsel: '', textcont: '' })
 
 describe('Click object', () => {
   test('Click toString() generates correct string', () => {
