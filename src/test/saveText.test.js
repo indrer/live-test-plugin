@@ -1,6 +1,6 @@
-import { saveText } from '../../js/util/fileDownloader'
+import { saveText } from '../js/util/fileDownloader'
 
-describe('saveText', () => {
+describe('saveText function', () => {
   it("should download the file", () => {
     const tempElem = {
       click: jest.fn()
