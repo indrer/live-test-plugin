@@ -5,8 +5,8 @@ import Visit from './visit'
 
 export default class Test {
   constructor (url) {
-    this.url = url
     this.instructions = new LinkedList()
+    this.instructions.addNode(new Visit(url))
   }
 
   addAction (type, sel, text) {
@@ -25,7 +25,6 @@ export default class Test {
   }
 
   toString () {
-    let generateUrl = `visit "${this.url}" \n`
-    return generateUrl + this.instructions.toString()
+    return this.instructions.toString()
   }
 }

@@ -1,6 +1,5 @@
 export default class Visit {
-  constructor (sel, link) {
-    this.sel = sel
+  constructor (link) {
     this.link = link
   }
 

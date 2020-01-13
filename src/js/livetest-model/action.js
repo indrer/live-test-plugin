@@ -8,7 +8,7 @@ export default class Action {
     this.action = null
     switch (actionType) {
       case VISITACT:
-        this.action = new Visit(sel, text)
+        this.action = new Visit(text)
         break
       case CLICKACT:
         this.action = new Click(sel, text)
