@@ -1,4 +1,4 @@
-import { VISITACT, CLICKACT, EXECUTEACT } from './actionType'
+import { VISITACT, CLICKACT, EXECUTEACT, INPUTACT } from './actionType'
 import Visit from './visit'
 import Click from './click'
 import Execute from './execute'
@@ -9,16 +9,16 @@ export default class Action {
     this.action = null
     switch (actionType) {
       case VISITACT:
-        this.action = new Visit(sel, text)
+        this.action = new Visit(text)
         break
       case CLICKACT:
-        this.action = new Click(sel, text)
+        this.action = new Click(sel)
         break
       case EXECUTEACT:
         this.action = new Execute(text)
         break
       case INPUTACT:
-        this.action = new Input(text)
+        this.action = new Input(sel, text)
         break
       default:
         console.log('Something went wrong')

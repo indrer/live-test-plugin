@@ -1,8 +1,8 @@
 export default class Assertion {
   constructor (type, sel, text) {
     this.type = type
-    this.sel = sel
-    this.text = text === undefined ? '' : text
+    this.sel = sel.uniqsel
+    this.text = sel.textcont
   }
 
   toString () {

@@ -1,7 +1,7 @@
 export default class Click {
-  constructor (sel, text) {
-    this.sel = sel
-    this.text = text === undefined ? '' : text
+  constructor (sel) {
+    this.sel = sel.uniqsel
+    this.text = sel.textcont
   }
 
   toString () {
