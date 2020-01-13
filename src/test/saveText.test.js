@@ -1,7 +1,7 @@
 import { saveText } from '../js/util/fileDownloader'
 
 describe('saveText function', () => {
-  it("should download the file", () => {
+  it('should download the file', () => {
     const tempElem = {
       click: jest.fn()
     }
