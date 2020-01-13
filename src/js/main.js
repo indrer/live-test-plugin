@@ -1,24 +1,35 @@
 import Test from './livetest-model/wtest'
 import { selectorGenerator } from './util/selectorGenerator'
-import { VISITACT, CLICKACT, EXECUTEACT } from './livetest-model/actionType'
+import { VISITACT, CLICKACT, EXECUTEACT, INPUTACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'
 
 let test = null
 let message = null
+let inputString = null
+let inputTargetEl = null
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
   message = msg
   if ((msg.from === 'popup') && (msg.subject === 'startRec')) {
     test = new Test(window.location.href)
-  } else if ((msg.from === 'testwin') && (msg.subject === 'executereq')) {
-    let executeString = message.executeString
-    test.addAction(EXECUTEACT, '', executeString)
-    sendMessage('executesel')
   } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
-    document.addEventListener('mouseover', elMarkEvent)
-    document.addEventListener('mouseout', elExitEvent)
-    document.addEventListener('mousedown', listenForClicks)
+    if ((msg.subject === 'executereq')) { // Execute action
+      let executeString = message.executeString
+      test.addAction(EXECUTEACT, '', executeString)
+      sendMessage('executesel')
+    } else if ((msg.subject === 'inputreq')) { // Input starting
+      document.addEventListener('input', updateEvent)
+    } else if ((msg.subject === 'inputfin')) { // Input ended
+      document.removeEventListener('input', updateEvent)
+      test.addAction(INPUTACT, inputTargetEl, inputString)
+      inputString = null
+      inputTargetEl = null
+    } else {
+      document.addEventListener('mouseover', elMarkEvent)
+      document.addEventListener('mouseout', elExitEvent)
+      document.addEventListener('mousedown', listenForClicks)
+    }
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
     saveText('test.wtest', test.toString())
     test = null
@@ -32,15 +43,15 @@ function listenForClicks (event) {
   event.stopPropagation()
   let elinfo = selectorGenerator(event.target)
   if (message.subject === 'clickreq') {
-    test.addAction(CLICKACT, elinfo.uniqsel, elinfo.textcont)
+    test.addAction(CLICKACT, elinfo, '')
     sendMessage('clicksel')
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
-    test.addAssertion(assertType, elinfo.uniqsel, elinfo.textcont)
+    test.addAssertion(assertType, elinfo, '')
     sendMessage('assertsel')
   } else if (message.subject == 'havereq') {
     let haveType = message.assertType
-    test.addAssertion(haveType, elinfo.uniqsel, elinfo.textcont)
+    test.addAssertion(haveType, elinfo, '')
     sendMessage('havesel')
   } else if (message.subject === 'visitreq') {
     if (!event.target.href) { // has no link, send message back to test window to alert user
@@ -50,7 +61,7 @@ function listenForClicks (event) {
     } else {
       let href = event.target.href
       // TODO possibly add textcont and unique selector separately to keep it consistent
-      test.addAction(VISITACT, elinfo, href)
+      test.addAction(VISITACT, '', href)
     }
     sendMessage('visitsel')
   }
@@ -58,6 +69,12 @@ function listenForClicks (event) {
   document.removeEventListener('mousedown', listenForClicks)
   document.removeEventListener('mouseover', elMarkEvent)
   document.removeEventListener('mouseout', elExitEvent)
+}
+
+function updateEvent (event) {
+  inputTargetEl = selectorGenerator(event.target)
+  inputString = event.target.value
+  sendMessage('inputstr', inputString)
 }
 
 function clickEvent (event) {
@@ -109,6 +126,6 @@ function createSelectorElement (el) {
 }
 
 // send message from this tab
-function sendMessage (subject) {
-  chrome.runtime.sendMessage({ from: 'main', subject: subject })
+function sendMessage (subject, inputString) {
+  chrome.runtime.sendMessage({ from: 'main', subject: subject, inputString: inputString })
 }

@@ -4,12 +4,12 @@ html, body {
     text-align: center;
 }
 
-#click-add, #assert-add, #execute-add, #assert-have {
+#click-add, #assert-add, #execute-add, #assert-have, #input-add {
     margin: 0 auto;
     padding: 2px;
 }
 
-#click-el-sel, #assert-el-sel, #have-el-sel, #visit-el-sel {
+#click-el-sel, #assert-el-sel, #have-el-sel, #visit-el-sel, #input-el-sel {
     display: inline-block;
     padding: 2px;
     border: 1px dashed black;
@@ -20,7 +20,11 @@ html, body {
     position: relative;
 }
 
-#execute-add textarea {
+#execute-sub {
+    margin-left: 5px;
+}
+
+#execute-add textarea, #input-add textarea {
     box-sizing: border-box;
 }
 
@@ -28,5 +32,13 @@ html, body {
     position: absolute;
     right: 0;
     bottom: 5px;
+}
+
+#input-add {
+    display: flex;
+}
+
+#input-el-sel, #input-text {
+    margin-right: 5px;
 }
 
