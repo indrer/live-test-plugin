@@ -64,12 +64,6 @@ function listenForClicks (event) {
       test.addAction(VISITACT, '', href)
     }
     sendMessage('visitsel')
-  } else if (message.subject === 'inputreq') {
-    console.log('input blah')
-
-    /*  if (event.target.tagName.toLowerCase() === 'input') {
-        console.log('input selected')
-      }*/
   }
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
@@ -78,10 +72,8 @@ function listenForClicks (event) {
 }
 
 function updateEvent (event) {
-  // let log = document.getElementById('user-message').value
   inputTargetEl = selectorGenerator(event.target)
   inputString = event.target.value
-  console.log('Log: ' + inputString)
   sendMessage('inputstr', inputString)
 }
 

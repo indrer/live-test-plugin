@@ -16,6 +16,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     let inputString = message.inputString
     let inputBox = document.getElementById('input-text')
     inputBox.value = inputString
+    document.getElementById('input-sub').disabled = false
   }
   response()
 })
@@ -97,8 +98,10 @@ function clickInputStartEvent () {
 
 function inputSubmit () {
   let clickEl = document.getElementById('input-sub')
+  let inputTxt = document.getElementById('input-text')
   clickEl.addEventListener('click', function (event) {
     sendMessage('inputfin', '', '')
+    inputTxt.value = ''
     enableAll()
   })
 }
@@ -142,6 +145,8 @@ function disableAll () {
   document.getElementById('have-op').disabled = true
   document.getElementById('execute-text').disabled = true
   document.getElementById('input-el-sel').disabled = true
+  document.getElementById('input-sub').disabled = true
+  document.getElementById('input-text').disabled = true
 }
 
 function enableAll () {
@@ -155,4 +160,6 @@ function enableAll () {
   document.getElementById('have-op').disabled = false
   document.getElementById('execute-text').disabled = false
   document.getElementById('input-el-sel').disabled = false
+  document.getElementById('input-sub').disabled = false
+  document.getElementById('input-text').disabled = true
 }
