@@ -12,6 +12,11 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     console.log('msg received from main')
     enableAll()
   }
+  else if ((msg.from === 'main') && (msg.subject === 'inputstr')) {
+    let inputString = message.inputString
+    let inputBox = document.getElementById('input-text')
+    inputBox.value = inputString
+  }
   response()
 })
 
@@ -26,6 +31,8 @@ function initEventList () {
   assertHave()
   visitPage()
   clickSubmitEvent()
+  clickInputStartEvent()
+  inputSubmit()
   finishButton()
 }
 
@@ -79,6 +86,22 @@ function assertHave () {
     disableAll()
   })
 }
+function clickInputStartEvent () {
+  let clickEl = document.getElementById('input-el-sel')
+  clickEl.addEventListener('click', function (event) {
+    // Inform main.js that the user will be entering input in main
+    sendMessage('inputreq', '', '')
+    disableAll()
+  })
+}
+
+function inputSubmit () {
+  let clickEl = document.getElementById('input-sub')
+  clickEl.addEventListener('click', function (event) {
+    sendMessage('inputfin', '', '')
+    enableAll()
+  })
+}
 
 function finishButton () {
   let finishButton = document.getElementById('finish-test-button')
@@ -118,6 +141,7 @@ function disableAll () {
   document.getElementById('assert-op').disabled = true
   document.getElementById('have-op').disabled = true
   document.getElementById('execute-text').disabled = true
+  document.getElementById('input-el-sel').disabled = true
 }
 
 function enableAll () {
@@ -130,4 +154,5 @@ function enableAll () {
   document.getElementById('assert-op').disabled = false
   document.getElementById('have-op').disabled = false
   document.getElementById('execute-text').disabled = false
+  document.getElementById('input-el-sel').disabled = false
 }

@@ -30,3 +30,12 @@ html, body {
     bottom: 5px;
 }
 
+#input-add {
+    display: inline;
+}
+
+#input-add textarea {
+    box-sizing: border-box;
+}
+
+

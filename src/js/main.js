@@ -1,10 +1,11 @@
 import Test from './livetest-model/wtest'
 import { selectorGenerator } from './util/selectorGenerator'
-import { VISITACT, CLICKACT, EXECUTEACT } from './livetest-model/actionType'
+import { VISITACT, CLICKACT, EXECUTEACT, INPUTACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'
 
 let test = null
 let message = null
+let inputString = null
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
@@ -15,10 +16,14 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     let executeString = message.executeString
     test.addAction(EXECUTEACT, '', executeString)
     sendMessage('executesel')
+  } else if ((msg.from === 'testwin') && (msg.subject === 'inputfin')) {
+    console.log('input finished')
+    test.addAction(INPUTACT, '', inputString)
   } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
     document.addEventListener('mouseover', elMarkEvent)
     document.addEventListener('mouseout', elExitEvent)
     document.addEventListener('mousedown', listenForClicks)
+    document.addEventListener('input', updateEvent)
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
     saveText('test.wtest', test.toString())
     test = null
@@ -53,11 +58,24 @@ function listenForClicks (event) {
       test.addAction(VISITACT, elinfo, href)
     }
     sendMessage('visitsel')
+  } else if (message.subject === 'inputreq') {
+    console.log('input blah')
+
+    /*  if (event.target.tagName.toLowerCase() === 'input') {
+        console.log('input selected')
+      }*/
   }
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
   document.removeEventListener('mouseover', elMarkEvent)
   document.removeEventListener('mouseout', elExitEvent)
+}
+
+function updateEvent (event) {
+  // let log = document.getElementById('user-message').value
+  inputString = document.getElementsByTagName('input')[0].value
+  console.log('Log: ' + inputString)
+  //sendMessage('inputstr', inputString)
 }
 
 function clickEvent (event) {
@@ -109,6 +127,6 @@ function createSelectorElement (el) {
 }
 
 // send message from this tab
-function sendMessage (subject) {
-  chrome.runtime.sendMessage({ from: 'main', subject: subject })
+function sendMessage (subject, inputString) {
+  chrome.runtime.sendMessage({ from: 'main', subject: subject, inputString: inputString })
 }
