@@ -9,7 +9,6 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   message = msg
   if ((msg.from === 'main') && ((msg.subject === 'clicksel') || (msg.subject === 'assertsel')
     || (msg.subject === 'havesel') || (msg.subject === 'visitsel') || (msg.subject === 'executesel'))) {
-    console.log('msg received from main')
     enableAll()
   }
   else if ((msg.from === 'main') && (msg.subject === 'inputstr')) {

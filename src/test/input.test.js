@@ -1,7 +1,8 @@
 import Input from '../js/livetest-model/input'
 
-let inputestempty = new Input({ inpt: '', uniqsel: '#input-test', textcont: '' })
-let inputest = new Input({ inpt: '', uniqsel: '#input-test', textcont: 'test' })
+let inputestempty = new Input({ uniqsel: '#input-test', textcont: '' }, '')
+let inputest = new Input({ uniqsel: '#input-test', textcont: 'test' }, '')
+let inputNonEmpty = new Input({ uniqsel: '#text-input-area', textcont: '' }, '"hello there!"')
 
 describe('input object', () => {
   test('Input toString() generates empty string', () => {
@@ -9,6 +10,10 @@ describe('input object', () => {
   })
   test('Input toString() generates correct string', () => {
     expect(inputest.toString()).toBe('input "" to "#input-test" with text "test"')
+  })
+  // Due to how inconsistently Jest handles escape characters, multiple escapes are required.
+  test('Input toString() generates correct string for non empty input', () => {
+    expect(inputNonEmpty.toString()).toBe('input "\\"hello there!\\"" to "#text-input-area"')
   })
 })
 

@@ -4,7 +4,7 @@
   "description": "Chrome extension",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack-cli & jest",
     "test": "jest"
   },
   "repository": {

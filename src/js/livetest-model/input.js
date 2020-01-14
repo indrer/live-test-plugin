@@ -4,7 +4,7 @@ export default class Input {
   constructor (sel, text) {
     this.sel = sel.uniqsel
     this.text = sel.textcont
-    this.inpt = text === undefined ? '' : escapeString(text)
+    this.inpt = text === undefined ? '' : text
   }
 
   toString () {
