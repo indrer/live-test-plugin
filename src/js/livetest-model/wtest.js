@@ -4,11 +4,15 @@ import Assertion from './assertion'
 import Visit from './visit'
 
 export default class Test {
-  constructor (url, notFirst) {
+  constructor (url, first) {
     this.instructions = new LinkedList()
-    if (!notFirst) {
+    if (first) {
       this.instructions.addNode(new Visit(url))
     }
+  }
+
+  getSize () {
+    return this.instructions.getSize()
   }
 
   addAction (type, sel, text) {

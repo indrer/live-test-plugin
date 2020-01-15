@@ -21,9 +21,11 @@ export default class LinkedList {
   constructor () {
     this.head = null
     this.tail = null
+    this.size = 0
   }
 
   addNode (data) {
+    this.size++
     if (this.head == null) {
       this.head = new Node(data)
       this.tail = this.head
@@ -32,6 +34,11 @@ export default class LinkedList {
       this.tail = this.tail.getNext()
     }
   }
+
+  getSize () {
+    return this.size
+  }
+
   getHeadNode () {
     return this.head
   }

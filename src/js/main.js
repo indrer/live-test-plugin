@@ -3,7 +3,8 @@ import { selectorGenerator } from './util/selectorGenerator'
 import { VISITACT, CLICKACT, EXECUTEACT, INPUTACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'
 
-let test = new Test(window.location.href, window.localStorage.getItem('wtest') !== null)
+let firstTestBool = window.localStorage.getItem('wtest') === null ? true : (window.localStorage.getItem('wtest').length === 0)
+let test = new Test(window.location.href, firstTestBool)
 let message = null
 let inputString = null
 let inputTargetEl = null
@@ -16,14 +17,12 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
     if ((msg.subject === 'executereq')) { // Execute action
       let executeString = message.executeString
       test.addAction(EXECUTEACT, '', executeString)
-      window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
       sendMessage('executesel')
     } else if ((msg.subject === 'inputreq')) { // Input starting
       document.addEventListener('input', updateEvent)
     } else if ((msg.subject === 'inputfin')) { // Input ended
       document.removeEventListener('input', updateEvent)
       test.addAction(INPUTACT, inputTargetEl, inputString)
-      window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
       inputString = null
       inputTargetEl = null
     } else {
@@ -32,21 +31,29 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
       document.addEventListener('mousedown', listenForClicks)
     }
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
-    saveText('test.wtest', window.localStorage.getItem('wtest').substring(0, window.localStorage.getItem('wtest').length - 1))
-    test = null
+    saveText('test.wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString().substring(0, test.toString().length - 1))
     window.localStorage.removeItem('wtest')
+    test = new Test(window.location.href, true)
   }
   response()
 })
 
+window.addEventListener('beforeunload', function (event) {
+  if (test.getSize() > 1) {
+    window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
+  }
+})
+
 // Listener for clicks
 function listenForClicks (event) {
-  event.target.addEventListener('click', clickEvent)
   event.stopPropagation()
   let elinfo = selectorGenerator(event.target)
   if (message.subject === 'clickreq') {
     test.addAction(CLICKACT, elinfo, '')
     sendMessage('clicksel')
+    if (event.target.href) {
+      window.location.href = event.target.href
+    }
   } else if (message.subject === 'assertreq') {
     let assertType = message.assertType
     test.addAssertion(assertType, elinfo, '')
@@ -67,7 +74,6 @@ function listenForClicks (event) {
     }
     sendMessage('visitsel')
   }
-  window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
   document.removeEventListener('mouseover', elMarkEvent)
