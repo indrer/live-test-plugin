@@ -4,9 +4,11 @@ import Assertion from './assertion'
 import Visit from './visit'
 
 export default class Test {
-  constructor (url) {
+  constructor (url, notFirst) {
     this.instructions = new LinkedList()
-    this.instructions.addNode(new Visit(url))
+    if (!notFirst) {
+      this.instructions.addNode(new Visit(url))
+    }
   }
 
   addAction (type, sel, text) {
@@ -25,6 +27,6 @@ export default class Test {
   }
 
   toString () {
-    return this.instructions.toString()
+    return this.instructions.toString() + '\n'
   }
 }

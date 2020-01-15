@@ -8,7 +8,7 @@
     "browser_action": {
       "default_popup": "html/popup.html"
     },
-    "permissions": ["windows", "tabs"],
+    "permissions": ["windows", "tabs", "cookies"],
     "content_scripts": [
       {
         "matches": ["*://*/*"],

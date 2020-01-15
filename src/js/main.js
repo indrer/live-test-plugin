@@ -3,7 +3,7 @@ import { selectorGenerator } from './util/selectorGenerator'
 import { VISITACT, CLICKACT, EXECUTEACT, INPUTACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'
 
-let test = null
+let test = new Test(window.location.href, window.localStorage.getItem('wtest') !== null)
 let message = null
 let inputString = null
 let inputTargetEl = null
@@ -12,17 +12,18 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   // Message from popup means we start a test
   message = msg
   if ((msg.from === 'popup') && (msg.subject === 'startRec')) {
-    test = new Test(window.location.href)
   } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
     if ((msg.subject === 'executereq')) { // Execute action
       let executeString = message.executeString
       test.addAction(EXECUTEACT, '', executeString)
+      window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
       sendMessage('executesel')
     } else if ((msg.subject === 'inputreq')) { // Input starting
       document.addEventListener('input', updateEvent)
     } else if ((msg.subject === 'inputfin')) { // Input ended
       document.removeEventListener('input', updateEvent)
       test.addAction(INPUTACT, inputTargetEl, inputString)
+      window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
       inputString = null
       inputTargetEl = null
     } else {
@@ -31,8 +32,9 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
       document.addEventListener('mousedown', listenForClicks)
     }
   } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
-    saveText('test.wtest', test.toString())
+    saveText('test.wtest', window.localStorage.getItem('wtest').substring(0, window.localStorage.getItem('wtest').length - 1))
     test = null
+    window.localStorage.removeItem('wtest')
   }
   response()
 })
@@ -65,6 +67,7 @@ function listenForClicks (event) {
     }
     sendMessage('visitsel')
   }
+  window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)
   document.removeEventListener('mouseover', elMarkEvent)
