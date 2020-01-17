@@ -15,6 +15,10 @@ class Node {
   addNext (nextNode) {
     this.next = nextNode
   }
+
+  toString () {
+    return this.data.toString()
+  }
 }
 
 export default class LinkedList {

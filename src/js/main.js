@@ -3,10 +3,10 @@ import { selectorGenerator } from './util/selectorGenerator'
 import { VISITACT, CLICKACT, EXECUTEACT, INPUTACT } from './livetest-model/actionType'
 import { saveText } from './util/fileDownloader'
 
-let firstTestBool = window.localStorage.getItem('wtest') === null ? true : (window.localStorage.getItem('wtest').length === 0)
+let firstTestBool = window.sessionStorage.getItem('wtest') === null ? true : (window.sessionStorage.getItem('wtest').length === 0)
 // Get tab ID of where the test is started
 if (firstTestBool) {
-  chrome.extension.sendMessage({ action: 'getTabId' }, function (res) {
+  chrome.extension.sendMessage({ subject: 'getTabId' }, function (res) {
     window.localStorage.setItem('wtest-id', res.tabId)
   })
 }
@@ -16,14 +16,25 @@ let inputString = null
 let inputTargetEl = null
 // Message listener
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
-  chrome.extension.sendMessage({ action: 'getTabId' }, function (res) {
-    if (res.tabId == window.localStorage.getItem('wtest-id')) {
+  // If no test started, change active tab
+  if (window.localStorage.getItem('wtest-started') === null) {
+    if (msg.subject === 'activeTab') {
+      window.localStorage.setItem('wtest-id', msg.activeTab)
+    }
+  }
+  chrome.runtime.sendMessage({ subject: 'getTabId' }, function (res) {
+    if (res.tabId == window.localStorage.getItem('wtest-id')) { // Don't change to 3 =. Not same type!
       message = msg
-      if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
+      if ((msg.subject === 'windowClosing') && (msg.from === 'testwin')) { // Test window is getting closed, set to no active tests
+        window.localStorage.removeItem('wtest-started')
+        window.sessionStorage.removeItem('wtest')
+      } else if ((msg.from === 'testwin') && (msg.subject !== 'testfin')) { // Listening for different test actions
         if ((msg.subject === 'executereq')) { // Execute action
           let executeString = message.executeString
           test.addAction(EXECUTEACT, '', executeString)
           sendMessage('executesel')
+          window.sessionStorage.setItem('wtest', (window.sessionStorage.getItem('wtest') === null ? test.toString() : window.sessionStorage.getItem('wtest')) + test.getLastAdded())
+          window.localStorage.setItem('wtest-started', true)
         } else if ((msg.subject === 'inputreq')) { // Input starting
           document.addEventListener('input', updateEvent)
         } else if ((msg.subject === 'inputfin')) { // Input ended
@@ -31,26 +42,21 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
           test.addAction(INPUTACT, inputTargetEl, inputString)
           inputString = null
           inputTargetEl = null
+          window.sessionStorage.setItem('wtest', (window.sessionStorage.getItem('wtest') === null ? test.toString() : window.sessionStorage.getItem('wtest')) + test.getLastAdded())
         } else {
           document.addEventListener('mouseover', elMarkEvent)
           document.addEventListener('mouseout', elExitEvent)
           document.addEventListener('mousedown', listenForClicks)
         }
       } else if ((msg.from === 'testwin') && (msg.subject === 'testfin')) { // Finished test
-        saveText('test.wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString().substring(0, test.toString().length - 1))
-        window.localStorage.removeItem('wtest')
-        window.localStorage.removeItem('wtest-id')
+        saveText('test.wtest', (window.sessionStorage.getItem('wtest') === null ? '' : window.sessionStorage.getItem('wtest')))
+        window.sessionStorage.removeItem('wtest')
+        window.localStorage.removeItem('wtest-started')
         test = new Test(window.location.href, true)
       }
       response()
     }
   })
-})
-
-window.addEventListener('beforeunload', function (event) {
-  if (test.getSize() > 1) {
-    window.localStorage.setItem('wtest', (window.localStorage.getItem('wtest') === null ? '' : window.localStorage.getItem('wtest')) + test.toString())
-  }
 })
 
 // Listener for clicks
@@ -75,16 +81,19 @@ function listenForClicks (event) {
       sendMessage('havesel')
     } else if (message.subject === 'visitreq') {
       if (!event.target.href) { // has no link, send message back to test window to alert user
-        // TODO enable actions in test window again, do not add
-        // this instruction to test window!
         alert('The element does not contain any links!')
       } else {
         let href = event.target.href
-        // TODO possibly add textcont and unique selector separately to keep it consistent
-        test.addAction(VISITACT, '', href)
+        test.addAction(VISITACT, href)
       }
       sendMessage('visitsel')
     }
+  }
+  window.localStorage.setItem('wtest-started', true)
+  if (window.sessionStorage.getItem('wtest') === null) {
+    window.sessionStorage.setItem('wtest', test.toString())
+  } else {
+    window.sessionStorage.setItem('wtest', window.sessionStorage.getItem('wtest') + test.getLastAdded())
   }
   elExitEvent(event)
   document.removeEventListener('mousedown', listenForClicks)

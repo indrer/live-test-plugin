@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function initEventList () {
+  closingEvent()
   clickElementEvent()
   assertElement()
   assertHave()
@@ -34,6 +35,12 @@ function initEventList () {
   clickInputStartEvent()
   inputSubmit()
   finishButton()
+}
+
+function closingEvent () {
+  window.addEventListener('beforeunload', function (event) {
+    sendMessage('windowClosing', '', '')
+  })
 }
 
 function clickElementEvent () {

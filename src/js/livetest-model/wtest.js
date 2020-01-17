@@ -11,6 +11,10 @@ export default class Test {
     }
   }
 
+  getLastAdded () {
+    return this.instructions.tail.toString() + '\n'
+  }
+
   getSize () {
     return this.instructions.getSize()
   }
@@ -25,8 +29,8 @@ export default class Test {
     this.instructions.addNode(assertion)
   }
 
-  addVisit (sel, link) {
-    let visit = new Visit(sel, link)
+  addVisit (link) {
+    let visit = new Visit(link)
     this.instructions.addNode(visit)
   }
 
