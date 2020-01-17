@@ -11,9 +11,21 @@ describe('selectonGenerator function', () => {
         throw err
       }
       let dom = new JSDOM(data)
-      let selector = selectorGenerator(dom.window.document.querySelector('#list-container > ul > a:nth-child(2) > li'))
+      let selector = selectorGenerator(dom.window.document.querySelector('[name="list-test"]'))
       expect(selector.textcont).toBe('Something2')
       expect(selector.uniqsel).toBe('#list-container li')
+    })
+  })
+
+  test('Generating selector for element with same tag siblings, no ID', () => {
+    fs.readFile('./src/test/mocks/testsite.html', 'utf8', function (err, data) {
+      if (err) {
+        throw err
+      }
+      let dom = new JSDOM(data)
+      let selector = selectorGenerator(dom.window.document.querySelector('[name="same-element-test"]'))
+      expect(selector.textcont).toBe('Visit Lnu3')
+      expect(selector.uniqsel).toBe('html body div div a')
     })
   })
 
@@ -23,7 +35,7 @@ describe('selectonGenerator function', () => {
         throw err
       }
       let dom = new JSDOM(data)
-      let selector = selectorGenerator(dom.window.document.querySelector('body > div > div.lipsum-container > div.lets > div > div.thisone > div > a'))
+      let selector = selectorGenerator(dom.window.document.querySelector('[name="burried-test"]'))
       expect(selector.textcont).toBe('Visit Lipsum')
       expect(selector.uniqsel).toBe('html body div div div div div div a')
     })
@@ -35,7 +47,7 @@ describe('selectonGenerator function', () => {
         throw err
       }
       let dom = new JSDOM(data)
-      let selector = selectorGenerator(dom.window.document.querySelector('body > div > div.selenium-container > div:nth-child(1)'))
+      let selector = selectorGenerator(dom.window.document.querySelector('[name="same-class-test"]'))
       expect(selector.textcont).toBe('Same-Class-Test')
       expect(selector.uniqsel).toBe('html body div div div')
     })

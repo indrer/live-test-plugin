@@ -14,11 +14,11 @@
       <div class="lnu-div">Lnu-Div</div>
       <a href="https://lnu.se/">Visit Lnu1</a>
       <a href="https://lnu.se/">Visit Lnu2</a>
-      <a href="https://lnu.se/">Visit Lnu3</a>
+      <a href="https://lnu.se/" name="same-element-test">Visit Lnu3</a>
     </div>
     <!-- div and input have same class -->
     <div class="selenium-container">
-      <div class="selenium-el">Same-Class-Test</div>
+      <div class="selenium-el" name="same-class-test">Same-Class-Test</div>
       <div class="selenium-el">Another element</div>
       <input class="selenium-el" type="text" name="text-box" value="Enter Text" size="35">
       <a href="https://www.seleniumeasy.com/test/">Visit Selenium</a>
@@ -31,7 +31,7 @@
           <input type="button" class="one-btn" value="btn" />
           <div class="thisone">thisone
             <div class="deep">deep
-              <a href="https://www.lipsum.com/">Visit Lipsum</a>
+              <a href="https://www.lipsum.com/" name="burried-test">Visit Lipsum</a>
             </div>
           </div>
           <div class="random-div">Random-Div</div>
@@ -44,7 +44,7 @@
       <ul>
         <li>Something1</li>
         <a href="#">
-          <li>Something2</li>
+          <li name="list-test">Something2</li>
         </a>
         <li>Something3</li>
         <a href="#">
